@@ -1,4 +1,4 @@
-# 7.2 Are +, -, * ... operators?
+# Are +, -, * ... operators?
 
 +, -, and the like are not operators but method calls. They can, therefore, be overloaded by new definitions.
 
@@ -30,7 +30,7 @@ t.attribute = 1
 If operators such as + and - are defined, Ruby automatically handles the self assignment forms (+=, -= and so on).
 
 
-#7.4 All these objects are fine, but does Ruby have any simple functions?
+#All these objects are fine, but does Ruby have any simple functions?
 
 Yes and no. Ruby has methods that look like functions in languages such as C or Perl:
 

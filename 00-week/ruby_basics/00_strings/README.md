@@ -1,4 +1,4 @@
-#Ruby Basics
+#Ruby Basics: strings
 
 ###Prereqs
 - None
