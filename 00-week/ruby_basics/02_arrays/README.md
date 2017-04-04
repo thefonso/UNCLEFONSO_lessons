@@ -1,11 +1,11 @@
-#Ruby Basics: arrays
+# Ruby Basics: arrays
 
-###Prereqs
+### Prereqs
 - strings
 - conditionals
 
 
-###Points To Ponder
+### Points To Ponder
 
 Look through these now and then use them to test yourself after doing the assignment
 
@@ -19,6 +19,6 @@ Look through these now and then use them to test yourself after doing the assign
 * describe each: `flatten`,`pop`,`shift`,`<<`
 
 
-###Why Arrays?
+### Why Arrays?
 - Getting you ready before manipulating hashes. Arrays are an important component in building software.
 

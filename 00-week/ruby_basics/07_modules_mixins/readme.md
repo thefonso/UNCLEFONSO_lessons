@@ -1,4 +1,4 @@
-###Modules and Mixins 
+### Modules and Mixins 
  
  Modules are a way of grouping together methods, classes, and constants.
  Modules give you two major benefits.

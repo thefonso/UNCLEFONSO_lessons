@@ -1,15 +1,15 @@
-#Ruby Basics: conditionals
+# Ruby Basics: conditionals
 
-###Prereqs
+### Prereqs
 - strings
 
 
-###Points To Ponder
+### Points To Ponder
 
 Look through these now and then use them to test yourself after doing the assignment
 
 
-#####operators
+##### operators
 
 * what is a Boolean?
 * What does `<=>` do?
@@ -20,12 +20,12 @@ Look through these now and then use them to test yourself after doing the assign
 * Describe &&
 * What is the difference between dot `.` and `::` operators?
 
-#####conditionals
+##### conditionals
 
 * Describe `If/Else/End`
 * Describe `case/switch`
 
 
-###Why conditionals?
+### Why conditionals?
 - Getting you ready before manipulating arrays.
 

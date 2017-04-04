@@ -1,9 +1,9 @@
-#Ruby Basics: strings
+# Ruby Basics: strings
 
-###Prereqs
+### Prereqs
 - None
 
-###What are the basics of Ruby (Learning Objectives)
+### What are the basics of Ruby (Learning Objectives)
 - Understand the basic data types of Ruby:
     - Numbers
     - Floats
@@ -13,14 +13,14 @@
 - String concatenation
 - Comparison operator
 
-###Points To Ponder
+### Points To Ponder
 
 Look through these now and then use them to test yourself after doing the assignment
 
 **Note:** This is again a long list of things to understand! Read through the list, breathe deep, do the assignment, and then come back to them.
 
 
-#####Strings
+##### Strings
 
 * what does 'touch' do?
 * what is a Boolean?
@@ -35,6 +35,6 @@ Look through these now and then use them to test yourself after doing the assign
 * Describe what `%`, `+=`, `-=` do.
 
 
-###Why Ruby Basics?
+### Why Ruby Basics?
 - Getting you ready before digging into data manipulation and comparison.
 

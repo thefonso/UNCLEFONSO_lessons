@@ -1,19 +1,19 @@
-#Blocks, Procs, Lamdas
+# Blocks, Procs, Lamdas
 
-###Prereqs
+### Prereqs
 - Methods
 
-###What are Blocks (Learning Objectives)
+### What are Blocks (Learning Objectives)
 - You have been using them this entire time. 
 
-####Points To Ponder
+#### Points To Ponder
 
 - What are objects and classes?
 - 
 
 
 
-###Why Procs and why lamdas?
+### Why Procs and why lamdas?
 - Classes are a critical component of OOP, and OOP is a fundamental component of building larger apps, particularly in rails.
 
 

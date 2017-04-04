@@ -1,12 +1,12 @@
-#Ruby Basics: hashes
+# Ruby Basics: hashes
 
-###Prereqs
+### Prereqs
 - strings
 - conditionals
 - arays
 
 
-###Points To Ponder
+### Points To Ponder
 
 Look through these now and then use them to test yourself after doing the assignment
 
@@ -19,6 +19,6 @@ Look through these now and then use them to test yourself after doing the assign
 * why are :symbols important?
 
 
-###Why hashes?
+### Why hashes?
 - One of the data structures included in ruby, hashes are faster than Arrays. Speed is important.
 

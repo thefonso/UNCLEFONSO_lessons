@@ -1,10 +1,10 @@
-#Classes, Objects, and Inheritance
+# Classes, Objects, and Inheritance
 
-###Prereqs
+### Prereqs
 - Data types
 - Methods
 
-###What are Classes and Objects (Learning Objectives)
+### What are Classes and Objects (Learning Objectives)
 - Articulate the value of using objects in programming
 - Write classes with:
 	- Attributes
@@ -12,7 +12,7 @@
 	- Initialize method, and other methods relevant to the object
 - Initialize a new class and perform actions on/with it
 
-####Points To Ponder
+#### Points To Ponder
 
 There are lots of moving parts as one builds out a class, and multiple classes.  Code organization is important, as is understanding the flow of data and variable context.
 
@@ -34,7 +34,7 @@ There are lots of moving parts as one builds out a class, and multiple classes. 
 
 
 
-###Why Objects and Classes?
+### Why Objects and Classes?
 - Classes are a critical component of OOP, and OOP is a fundamental component of building larger apps, particularly in rails.
 
 

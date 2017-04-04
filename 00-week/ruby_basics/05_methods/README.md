@@ -1,12 +1,12 @@
-#Methods
+# Methods
 
-###Prereqs
+### Prereqs
 - Data types
 - Conditions
 - Loops
 
 
-###Points to Ponder
+### Points to Ponder
 - In Ruby, are functions and methods the same thing?
 - What does a method contain?
 - How do you define a method?
@@ -21,8 +21,8 @@
   - instructor will walkthrough the requirements step-by-step as the students fill in the necessary code along the way.
 
 
-###Why Methods?
+### Why Methods?
 - Now we can introduce the concepts of "DRY code" and begin organizing our code better
 
-###Resources
+### Resources
 - http://www.rootr.net/rubyfaq-7.html
