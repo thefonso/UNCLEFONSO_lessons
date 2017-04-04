@@ -224,9 +224,13 @@ then
 git config --global credential.helper cache
 ```
 
+## python
+
+```
+brew install python
+```
 
 ## Vim
-### Install Vim
 
 install via homebrew
 
@@ -269,9 +273,11 @@ vim-airline
 git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
 ```
 
-## MacVim
+```
+https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
+```
 
-### Install macvim
+## MacVim
 
 In Terminal:
 
