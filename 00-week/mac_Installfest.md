@@ -208,7 +208,7 @@ brew install git
 
 In Terminal:
 
-```
+```
 git config --global user.name "YOUR-USERNAME"
 ```
 
@@ -280,7 +280,7 @@ https://github.com/t9md/vim-ruby-xmpfilter
 https://github.com/tpope/vim-rbenv
 ```
 
-<br>
+
 ## Additional Tools
 
 * [Alfred][alfred]
