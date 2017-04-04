@@ -282,7 +282,7 @@ https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
 In Terminal:
 
 ```
-brew install macvim --env-std --override-system-vim
+brew install macvim --override-system-vim
 ```
 ![](macvim_brew.png)
 	
