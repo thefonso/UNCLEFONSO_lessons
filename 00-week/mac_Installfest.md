@@ -228,7 +228,13 @@ git config --global credential.helper cache
 ## Vim
 ### Install Vim
 
-In Terminal:
+install via homebrew
+
+```
+brew install vim --with-python --with-ruby --with-perl
+```
+
+grab fonso's config files
 
 ```
 cd ~/
@@ -245,7 +251,23 @@ cd dotfiles
 
 ruby install.rb
 ```
-NOTE: powerline install instructions
+**powerline install instructions**
+
+install the special fonts
+```
+# clone
+git clone https://github.com/powerline/fonts.git
+# install
+cd fonts
+./install.sh
+# clean-up a bit
+cd ..
+rm -rf fonts
+```
+vim-airline
+```
+git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+```
 
 ## MacVim
 
@@ -254,7 +276,7 @@ NOTE: powerline install instructions
 In Terminal:
 
 ```
-brew install macvim
+brew install macvim --env-std --override-system-vim
 ```
 ![](macvim_brew.png)
 	
