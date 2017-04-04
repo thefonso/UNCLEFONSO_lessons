@@ -15,7 +15,8 @@ end
 floats.collect{ |num| num*2 } # => [2.4, 6.9, 1.82, 15.454, 22.84, 965.822]
 
 # Proc 
-# Procs are easy to define! You just call Proc.new and pass in the block you want to save.
+# Procs are saved blocks.
+# The '&' tells ruby to turn the proc into a block
 Proc.new {puts "hello"} 
 
 # assign a proc to a variable name

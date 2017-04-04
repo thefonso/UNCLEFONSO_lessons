@@ -2,7 +2,7 @@
 
 students = ['frodo baggins', 'samwise gamgee', 'peregrin took', 'meriadoc brandybuck']
 # How do we make these uppercase?
-students.capitalize # nope!
+# students.capitalize ? nope!
 
 # But this works:
 students.each { |student| p student.capitalize }
@@ -103,7 +103,7 @@ def lambda_test
 end
 
 # calling lambda_test prints 'Hello World'
-lambda_test
+lambda_test  
 
 
 def proc_test
@@ -113,7 +113,7 @@ def proc_test
 end
 
 # calling proc_test prints nothing
-proc_test
+proc_test  
 
 
 

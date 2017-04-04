@@ -1,7 +1,10 @@
-# TODO: merge 17 and 18
-# Like procs, lambdas are objects. The similarities don't stop there: 
-# with the exception of a bit of syntax and a few behavioral quirks, l
-# ambdas are identical to procs.
+# Like procs, lambdas are objects. lambdas are almost identical to procs.
+# There are two main differences between Procs and Lambdas...
+#
+# 01 a lambda checks the number of arguments passed to it, while a proc does not.
+#
+# 02 when a lambda returns, it passes control back to the calling method; 
+#    when a proc returns, it does so immediately, without going back to the calling method.
 
 # lambda
 lambda { puts "Hello!" }
@@ -19,5 +22,3 @@ end
 
 # so lets run it and see what happens..can you guess?
 lambda_demo(lambda { puts "I'm the lambda!" })
-# >> I'm the method!
-# >> I'm the lambda!
