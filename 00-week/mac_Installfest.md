@@ -1,4 +1,4 @@
-#Installfest (Mac)
+# Installfest (Mac)
 
 **Version note:** Ruby 2.1.2 and Rails 4.0.4 are the standard for the course. If you already have another version installed, I'll either be advancing or rolling you back for consistency.
 
@@ -34,23 +34,23 @@ Please check your OS X version before beginning. (Click the Apple menu and choos
 [xcode]:    https://developer.apple.com/xcode/
 [chrome]:    https://www.google.com/intl/en/chrome/browser/desktop/index.html
 
-##XCode Command Line Tools
+## XCode Command Line Tools
 
 In Terminal:
 
 `xcode-select --install`
 
 
-##Homebrew
+## Homebrew
 
-###Install Homebrew
+### Install Homebrew
 
 In Terminal:
 
 `ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"`
 
 
-###Brew Doctor
+### Brew Doctor
 `brew doctor`
 
 - See what the Doctor says.  You may need to edit your ~/.bash_profile or make other adjustments. If you're not sure how to handle the output, flag down fonso!
@@ -105,9 +105,9 @@ cd dotfiles
 cp _bash_profile ../.bash_profile
 ```
 
-##rbenv & Ruby
+## rbenv & Ruby
 
-###Install RBENV
+### Install RBENV
 
 In Terminal:
 
@@ -133,7 +133,7 @@ source ~/.bash_profile
 ```
 
 
-###Install Ruby 2.1.2
+### Install Ruby 2.1.2
 
 Curious whether you've got Ruby installed already? Type `ruby -v` in Terminal to find out.
 
@@ -146,7 +146,7 @@ rbenv install 2.1.2
 
 This will take a while. Don't panic if it's more than 5 minutes and it looks like nothing has happened.
 
-###Set Ruby 2.1.2 as the Default
+### Set Ruby 2.1.2 as the Default
 
 In Terminal:
 
@@ -155,7 +155,7 @@ rbenv global 2.1.2
 ```
 
 
-###Rehash to install shims
+### Rehash to install shims
 
 In Terminal:
 
@@ -164,9 +164,9 @@ rbenv rehash
 ```
 
 
-##Rails
+## Rails
 
-###Install Rails 4.0.4 & rehash
+### Install Rails 4.0.4 & rehash
 
 In Terminal: 
 
@@ -174,7 +174,7 @@ In Terminal:
 gem install rails --version=4.0.4 --no-ri --no-rdoc
 ```
 
-###Double-check your Ruby & Rails versions
+### Double-check your Ruby & Rails versions
 
 In Terminal:
 
@@ -193,9 +193,9 @@ You should have Ruby 2.1.2 and Rails 4.0.4.
 If you don't, please find fonso!
 
 
-##Git
+## Git
 
-###Install git
+### Install git
 
 In Terminal:
 
@@ -204,7 +204,7 @@ brew install git
 ```
 
 
-###Update git config information
+### Update git config information
 
 In Terminal:
 
@@ -225,8 +225,8 @@ git config --global credential.helper cache
 ```
 
 
-##Vim
-###Install Vim
+## Vim
+### Install Vim
 
 In Terminal:
 
@@ -247,9 +247,9 @@ ruby install.rb
 ```
 NOTE: powerline install instructions
 
-##MacVim
+## MacVim
 
-###Install macvim
+### Install macvim
 
 In Terminal:
 
@@ -281,7 +281,7 @@ https://github.com/tpope/vim-rbenv
 ```
 
 <br>
-##Additional Tools
+## Additional Tools
 
 * [Alfred][alfred]
 * [Spectacle][spectacle]
