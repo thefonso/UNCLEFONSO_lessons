@@ -1,33 +1,33 @@
-#Title: Guess The Number
+# Title: Guess The Number
 
-###Type: 
+### Type: 
 - Group Lab
 
-###Time Required: 
+### Time Required: 
 - 30 minutes
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
     - Loops
     - gets.chomp
     - rand()
 
-###Objectives:
+### Objectives:
 - Practice taking user input and a loop
 
-###Activity:
+### Activity:
 - Students should work on this lab in groups.
 - Students should be given `guess_the_number-prompt.rb` as a starting point, with `guess_the_number-solution.rb` as the ideal coded solution
 
-###Explanation
+### Explanation
 - You are to generate a basic "guess my number" game.  The computer will pick a random number between 0 and 10.  The user will guess the number until they guess correctly.
 
-###Specification:
+### Specification:
 - The user should be asked to guess a number
 - If the user's guess is correct, the user should see a congratulatory message
 - If the user's guess is not correct, the user should be asked to guess the number again.
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?
 

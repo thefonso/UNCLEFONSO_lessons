@@ -1,22 +1,22 @@
-#Title: Rental App
+# Title: Rental App
 
-###Type:
+### Type:
 - Lab / Homeowrk
 
-###Time Required: 
+### Time Required: 
 - 2 hours+
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
 - Hashes & Arrays
 - Blocks
 - OOP
 - Multi-file project (require_relative)
 
-###Objectives:
+### Objectives:
 - Practice creating and initializing objects
 
-###Activity:
+### Activity:
 You will be creating an app that models the rental process. The premise is that "Owners of buildings can rent apartments to potential tenants". This app should be created using a code-along style.
 
 * "What types of objects might you have in an app that manages rentals?"
@@ -53,12 +53,12 @@ You will be creating an app that models the rental process. The premise is that 
 * Write to_s methods for each object
 * Write a main.rb file that allows you to build and add new objects
 
-###Explanation
+### Explanation
 - This is a multi-file project that has a main file for working with the objects, and each class as separate files.  Students are expected to build this from ground-up, and perhaps starting with the main.rb file.
 
-###Specification:
+### Specification:
 - n/a
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?

@@ -1,29 +1,29 @@
-#Title: Car Prompt
+# Title: Car Prompt
 
-###Type: 
+### Type: 
 - Codealong
 
-###Time Required: 
+### Time Required: 
 - 15 minutes
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
     - classes
     - methods
     - basic class inheritance
 
-###Objectives:
+### Objectives:
 - Practice with classes, and inheritance
 
-###Activity:
+### Activity:
 - Students can work on this lab in groups to solve the prompts
 
-###Explanation
+### Explanation
 - Can be used as a small lab, and one can be used as a demo code-along in class.
 
-###Specification:
+### Specification:
 - see car-prompt.md
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?

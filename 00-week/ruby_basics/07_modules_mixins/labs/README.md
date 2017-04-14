@@ -1,12 +1,12 @@
-#Title: Superhero
+# Title: Superhero
 
-###Type:
+### Type:
 - Codealong
 
-###Time Required:
+### Time Required:
 - 15 minutes
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
     - classes
     - methods
@@ -14,18 +14,18 @@
     - basic class inheritance
     - extending a class with a module
 
-###Objectives:
+### Objectives:
 - Practice with modules, classes, and inheritance
 
-###Activity:
+### Activity:
 - Students can work on this lab in groups to solve the prompts
 
-###Explanation
+### Explanation
 - Can be used as a small lab, and one can be used as a demo code-along in class.
 
-###Specification:
+### Specification:
 - see prompts.md
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?

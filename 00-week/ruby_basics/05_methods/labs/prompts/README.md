@@ -1,31 +1,31 @@
-#Title: Prompts
+# Title: Prompts
 
-###Type: 
+### Type: 
 - Codealong
 
-###Time Required: 
+### Time Required: 
 - 15 minutes
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
     - If/elsif/else
     - gets.chomp
     - conditions
     - methods
 
-###Objectives:
+### Objectives:
 - Practice creating `if` statements and adding logic to our programs
 
-###Activity:
+### Activity:
 - You can work on this lab in groups to solve the prompts
 
-###Explanation
+### Explanation
 - Refactor the familiar conditionals codealong examples from earlier to be wrapped into a method that accepts arguments.  These methods can be pasted or written into the console and then called with the appropriate arguments.
 - Can be used as a small lab, and one can be used as a demo code-along in class.
 
-###Specifications:
+### Specifications:
 - see prompts.rb
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?

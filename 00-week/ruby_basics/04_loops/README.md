@@ -1,13 +1,13 @@
-#Ruby Basics: loops
+# Ruby Basics: loops
 
-###Prereqs
+### Prereqs
 - strings
 - conditionals
 - arays
 - hashes
 
 
-###Points To Ponder
+### Points To Ponder
 
 Look through these now and then use them to test yourself after doing the assignment
 
@@ -17,6 +17,6 @@ Look through these now and then use them to test yourself after doing the assign
 * what does `break` do?
 * what is `next`?
 
-###Why loops?
+### Why loops?
 - because you need 'em. next up `methods`
 

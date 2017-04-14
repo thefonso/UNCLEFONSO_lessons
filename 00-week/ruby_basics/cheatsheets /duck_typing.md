@@ -1,4 +1,4 @@
-###What is Duck Typing
+### What is Duck Typing
 "If an object walks like a duck and talks like a duck, then the Ruby interpreter is happy to treat it as if it were a duck."
 
 Duck Typing refers to Ruby being less concerned with the class of an object and more concerned with what methods can be called on it and what operations can be performed on it.

@@ -1,29 +1,29 @@
-#Title: Array Exercises
+# Title: Array Exercises
 
-###Type:
+### Type:
 - Individual Lab
 
-###Time Required:
+### Time Required:
 - 30 minutes
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
 
-###Objectives:
+### Objectives:
 - Creating and working with an array from a prompt
 
-###Activity:
+### Activity:
 - Students should work on this lab individually to create and manipulate the array
 
-###Explanation
+### Explanation
 - Using the `prompts.rb` file, students should construct and manipulate the
 array as described.  It may not be entirely clear what is expected, but be sure
 to not give away the answer.
 
-###Specification:
+### Specification:
 - See `prompts.rb`
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?
 

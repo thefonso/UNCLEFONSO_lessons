@@ -1,24 +1,24 @@
-#Title: Smoothies
+# Title: Smoothies
 
-###Type:
+### Type:
 - Lab
 
-###Time Required: 
+### Time Required: 
 - 30 minutes
 
-###Prerequisites:
+### Prerequisites:
 - Ruby
 - Hashes & Arrays
 - Blocks
 - OOP
 
-###Objectives:
+### Objectives:
 - Exercise working with arrays, strings, and a basic object
 
-###Activity:
+### Activity:
 - Students can work on this lab individually or groups of 2
 
-###Explanation
+### Explanation
 - Given a hash of ingredients, write a function called `blend`.
 	- It should take all the smoothie ingredients (not the measurements) and chop up and mix all the characters and output a mixed string of characters
 	- Be sure to remove the spaces, as we don't want any air bubbles in our smoothie!
@@ -28,10 +28,10 @@
 	- FOR SAFETY'S SAKE When you create a new blender by default it should be off.
 	- Blend the the smoothie array
 
-###Specification:
+### Specification:
 - n/a
 
-###Post-mortem:
+### Post-mortem:
 - What worked?
 - Student misunderstandings?
 

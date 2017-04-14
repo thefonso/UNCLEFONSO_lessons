@@ -13,7 +13,7 @@ and stop that user is getting off at and prints the total number of stops for th
 
 ---
 
-###Hints: 
+### Hints: 
 - Get the program to work for a single line before trying to tackle multiple lines.
 - Consider diagraming the lines by sketching out the subway lines and their stops and intersection.
 - Make subway lines keys in a hash, while the values are an array of all the stops on each line.
@@ -22,7 +22,7 @@ and stop that user is getting off at and prints the total number of stops for th
 
 ---
 
-###Non-Required Bonus:
+### Non-Required Bonus:
 - Use input validation
 	- User must enter a line and station in the subway network
 	- If the user enters something else, your program should handle it
@@ -30,7 +30,7 @@ and stop that user is getting off at and prints the total number of stops for th
 - Allow trains to have multiple intersection points
 - Include colors, i.e. using the `rainbow` gem
 
-####Example
+#### Example
 ```ruby
 require 'rainbow'
 puts "Welcome to NYC!".color('ff0000')
@@ -39,5 +39,5 @@ puts "It will be easy with this my help:".color('ffffff')
 
 ```
 
-####Final Thoughts:
+#### Final Thoughts:
 - Will your code work if we add ALL of NYC's subway lines?

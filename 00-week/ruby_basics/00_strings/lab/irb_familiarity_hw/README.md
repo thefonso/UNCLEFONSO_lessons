@@ -1,28 +1,28 @@
-#####Title: Ruby Familiarity
+##### Title: Ruby Familiarity
 
-#####Type: 
+##### Type: 
 - Homework
 
-#####Time Required: 
+##### Time Required: 
 - 30 minutes
 
-#####Prerequisites:
+##### Prerequisites:
 - Ruby
     - launching irb
 
-#####Objectives:
+##### Objectives:
 - Practice using irb and first look at some common commands
 
-#####Activity:
+##### Activity:
 - Students should work on this lab individually
 
-#####Explanation
+##### Explanation
 - In this exercise, the students will take a first look at some common commands in Ruby. 
   The idea here is to become familiar with Ruby syntax and formatting.  
   This is likely to be the first time they've seen some of these commands.
 
-#####Specification:
+##### Specification:
 - n/a
 
-####Post-mortem:
+#### Post-mortem:
 - Student misunderstandings?
