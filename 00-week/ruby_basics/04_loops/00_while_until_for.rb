@@ -1,4 +1,4 @@
-# While, Until, For
+# LOOPS: While, Until, For
 
 ### WHILE loop's are separated from code by the reserved word do 
 #
@@ -31,3 +31,20 @@ for i in 0..5
 end
 
 
+# >> Inside while loop i = 0
+# >> Inside while loop i = 1
+# >> Inside while loop i = 2
+# >> Inside while loop i = 3
+# >> Inside while loop i = 4
+# >> Inside until loop i = 0
+# >> Inside until loop i = 1
+# >> Inside until loop i = 2
+# >> Inside until loop i = 3
+# >> Inside until loop i = 4
+# >> Inside until loop i = 5
+# >> For loop local variable i value is 0
+# >> For loop local variable i value is 1
+# >> For loop local variable i value is 2
+# >> For loop local variable i value is 3
+# >> For loop local variable i value is 4
+# >> For loop local variable i value is 5

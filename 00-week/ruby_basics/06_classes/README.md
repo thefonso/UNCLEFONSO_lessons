@@ -3,6 +3,9 @@
 ### Prereqs
 - Data types
 - Methods
+- Loops
+- Strings
+- Conditionals
 
 ### What are Classes and Objects (Learning Objectives)
 - Articulate the value of using objects in programming
@@ -28,11 +31,11 @@ There are lots of moving parts as one builds out a class, and multiple classes. 
 - What is inheritance?
 - What does a class inherit?
 - `class-inheritance.rb` has some examples of defining classes, and basic inheritance
-- What is relationship between a class method and an instance method?
-- If Pry has been introduced, demonstrate how to use pry to dig into classes, explore methods, and debug
-- The `labs` folder contains a variety of labs and homeworks to help practice and familiarize the concepts
+- What is the relationship between a class method and an instance method?
 
 
+If Pry has been introduced, demonstrate how to use pry to dig into classes, explore methods, and debug
+The `labs` folder contains a variety of labs and homeworks to help practice and familiarize the concepts
 
 ### Why Objects and Classes?
 - Classes are a critical component of OOP, and OOP is a fundamental component of building larger apps, particularly in rails.

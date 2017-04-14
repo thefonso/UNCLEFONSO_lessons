@@ -14,7 +14,7 @@ Look through these now and then use them to test yourself after doing the assign
 * why are hases faster than arrays?
 * how do you initialize a hash?
 * how can we iterate a hash?
-* describe: `has_value`,`has_key`,`fetch`,`values_at`,`delete`,`frst`
+* describe: `has_value`,`has_key`,`fetch`,`values_at`,`delete`,`first`
 * describe hash `literal` and `new` notations
 * why are :symbols important?
 

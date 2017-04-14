@@ -1,3 +1,5 @@
+# METHODS: scope
+#
 # When you make a method, remember...
 # it doesn't know about anything outside of itself, 
 #
@@ -16,9 +18,9 @@ def my_own_little_world
 	return twelve
 end
 
-# using # => let's see what the value of our first twelve is.
+# using # => let's see what the value of this and our first twelve is.
 
-my_own_little_world # =>
+ my_own_little_world # => 14
 
-twelve     # =>
+ twelve     # => 12
 

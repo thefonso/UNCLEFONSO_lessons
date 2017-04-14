@@ -1,10 +1,15 @@
-# Comparison operators ( ==, !=, >, <)
-0 == 1
-1 != 0
-5 < 9
-1.1 >= 1
+# CONDITIONALS
+# (run command + r to see results of this code at the bottom)
+#
+# Right below we have a few examples of comparison operators and conditonal statements
 
-# Boolean operators ( && , ||, !)
+### Comparison operators ( ==, !=, >, <)
+0 == 1 # !> possibly useless use of == in void context
+1 != 0 # !> possibly useless use of != in void context
+5 < 9 # !> possibly useless use of < in void context
+1.1 >= 1 # !> possibly useless use of >= in void context
+
+### Boolean operators ( && , ||, !)
 true && true
 true && false
 true || false
@@ -20,7 +25,7 @@ true || true
 # If/else/unless
 if true
   p "Its true!"
-end
+end  
 
 if (2 + 2) == 5
   p "We have a problem"
@@ -40,6 +45,7 @@ else
   p "I will never be seen"
 end
 
+name = "fonso"
 unless name == "david"
   p "Your name is definitely not david"
 end
@@ -58,3 +64,9 @@ case grade
 end
 
 # review the ruby_operators.md
+
+# >> "Its true!"
+# >> "its not 1984 yet"
+# >> "its not 1984 yet"
+# >> "Your name is definitely not david"
+# >> Try harder!

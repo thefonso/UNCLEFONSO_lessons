@@ -1,3 +1,5 @@
+# ARRAYS: other methods
+#
 characters = ['a', 'b', 'c']
 
 

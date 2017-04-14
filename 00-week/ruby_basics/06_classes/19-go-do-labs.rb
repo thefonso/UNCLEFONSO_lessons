@@ -1,7 +1,7 @@
 # Okay, we made it through :)
-# Now you just need to go do the challenges
+# Now you just need to go do the labs 
 # 
-# Open up the labs in your text editor.
+# Open up the labs folder in your text editor.
 
 # !!!!!!!!!!DON'T FORGET!!!!!!!!!
 # There are cheatsheets to help you. You will need to reference them!

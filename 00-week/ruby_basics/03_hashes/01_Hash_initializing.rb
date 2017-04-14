@@ -1,3 +1,5 @@
+# HASH: initializing
+#  
 # So how do you create a Hash?
 #
 # =====  Initializing a Hash =====

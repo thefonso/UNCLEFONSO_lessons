@@ -1,4 +1,4 @@
-# Ruby Lesson - Hash REVIEW
+# ===== Hash REVIEW =====
 
 # SO What did we talk about...
 
@@ -7,7 +7,7 @@
 # And focused our attention on...
 #
 # WHAT A HASH IS:
-#   A hash is a type of data structure that lets you store things in a table of key / value pairs…like so
+#   A hash is a type of data structure that lets you store things in a table of key / value pairs, like so...
 # 
    hash = {
      key1 => value1,

@@ -13,7 +13,7 @@ Look through these now and then use them to test yourself after doing the assign
 
 * WHILE executes code _____ condition is true?
 * UNTIL executes code _____ condition is true?
-* what did Maz say about `begin ... end`?
+* what did Mats say about `begin ... end`?
 * what does `break` do?
 * what is `next`?
 

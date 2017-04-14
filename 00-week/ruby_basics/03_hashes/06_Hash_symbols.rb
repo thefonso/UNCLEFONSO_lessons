@@ -2,25 +2,13 @@
 
 #Using symbols will speed up your hash. Let’s talk about why…
 
-# Every instance of a String is a new object, 
-# notice they have different object ids.
-'this is a string'.object_id # => 70247714414700
-'this is a string'.object_id # => 70247714414240
+'this is a string'.object_id # => 70339115697540
+'this is a string'.object_id # => 70339115697140
 
-# Every instance of a Symbol is the same object,
-# notice they have the same object id.
-:this_is_a_symbol.object_id # => 362888
-:this_is_a_symbol.object_id # => 362888
-
-# This makes symbols easy to test for equality. For a symbol you just check
-# if it is the same object, but for a String, you must check that
-# each character is the same character (iterate through the entire
-# string) this gives symbols a performance boost for checking
-# equality.
+:this_is_a_symbol.object_id # => 420328
+:this_is_a_symbol.object_id # => 420328
 
 
-# you typically use symbols in a situation where you wish to use
-# a constant, but want it to be named, like a String
 
 # SO now we can REWRITE our secret_identities Hash with symbols like so...
 

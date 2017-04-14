@@ -17,7 +17,7 @@
 - Practice creating `if` statements and adding logic to our programs
 
 ###Activity:
-- Students can work on this lab in groups to solve the prompts
+- You can work on this lab in groups to solve the prompts
 
 ###Explanation
 - Refactor the familiar conditionals codealong examples from earlier to be wrapped into a method that accepts arguments.  These methods can be pasted or written into the console and then called with the appropriate arguments.

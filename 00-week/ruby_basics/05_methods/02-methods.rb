@@ -1,14 +1,8 @@
-# The way you modify objects is through methods.
-# methods contain sets of instructions.
-# the Ruby language already contains many methods as part of the language.
+# METHODS: More about methods 
 #
-# For example, there is a set of instructions that knows how to capitalize each letter in a string object. 
-# That set of instructions method name is ".upcase"
+# You can make methods, too! 
+# Method names should begin with a lowercase letter.
 
-"davis".upcase # => "DAVIS"
-
-
-# You can make methods, too!
 
 def is_this_a_method?
   "Yes, this is a method!" 
@@ -18,7 +12,23 @@ end
 
 is_this_a_method? # => "Yes, this is a method!"
 
+# methods can pass value also...
+
+def writeln(string)
+  p(string)
+end
+
+writeln("This method accepts a string") # => "This method accepts a string"
+
+
 # TIP: in your editor type "def" and hit the tab key...you should see this...
 def method_name
 	
 end
+
+def town
+ whatev 
+end
+# Note: Methods should be defined before calling them, otherwise Ruby will raise an exception for undefined method
+
+# >> "This method accepts a string"

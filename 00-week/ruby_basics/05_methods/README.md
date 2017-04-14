@@ -15,10 +15,9 @@
 - What is Variable Scope?
 
 
-### Demo
-- demo: `prompts` involves rewriting the code from `conditionals_lab` into functions
-- Codealong: `ruby_calculator`
-  - instructor will walkthrough the requirements step-by-step as the students fill in the necessary code along the way.
+### Labs 
+- `prompts` involves rewriting the code from `conditionals_lab` into methods
+- `ruby_calculator` requirements are listed step-by-step, the student will fill in the necessary code along the way.
 
 
 ### Why Methods?

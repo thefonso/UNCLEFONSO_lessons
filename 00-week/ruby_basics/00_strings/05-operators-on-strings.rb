@@ -1,10 +1,10 @@
-# You can use basic operators on Strings, just like other objects:
 
-my_string   = "Face"
-your_string = "book"
 
-my_string + your_string  # => "Facebook"
+my_string   = "Uncle"
+your_string = "fonso"
+
+my_string + your_string # => "Unclefonso"
 
 my_string == your_string # => false
-my_string = "book"
+my_string = "fonso"
 my_string == your_string # => true

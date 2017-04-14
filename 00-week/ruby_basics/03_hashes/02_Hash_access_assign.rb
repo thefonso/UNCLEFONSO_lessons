@@ -1,3 +1,5 @@
+# HASH: access and assign
+#  
 # recall that...
 
 my_hash = { 'name' => 'Eric', 'age' => 26, 	'hungry?' => true }
@@ -17,5 +19,7 @@ my_hash = { 'name' => 'Eric', 'age' => 26, 	'hungry?' => true }
 
 		my_hash['name'] # => "babykosh"
 		my_hash['age'] # => 1000
+
+    my_hash # => {"name"=>"babykosh", "age"=>1000, "hungry?"=>true}
 
 
