@@ -208,7 +208,7 @@ brew install git
 
 In Terminal:
 
-```
+```
 git config --global user.name "YOUR-USERNAME"
 ```
 
@@ -224,11 +224,21 @@ then
 git config --global credential.helper cache
 ```
 
+## python
+
+```
+brew install python
+```
 
 ## Vim
-### Install Vim
 
-In Terminal:
+install via homebrew
+
+```
+brew install vim --with-python --with-ruby --with-perl
+```
+
+grab fonso's config files
 
 ```
 cd ~/
@@ -245,11 +255,29 @@ cd dotfiles
 
 ruby install.rb
 ```
-NOTE: powerline install instructions
+**powerline install instructions**
+
+install the special fonts
+```
+# clone
+git clone https://github.com/powerline/fonts.git
+# install
+cd fonts
+./install.sh
+# clean-up a bit
+cd ..
+rm -rf fonts
+```
+vim-airline
+```
+git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+```
+
+```
+https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
+```
 
 ## MacVim
-
-### Install macvim
 
 In Terminal:
 
@@ -280,7 +308,7 @@ https://github.com/t9md/vim-ruby-xmpfilter
 https://github.com/tpope/vim-rbenv
 ```
 
-<br>
+
 ## Additional Tools
 
 * [Alfred][alfred]
