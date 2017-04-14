@@ -1,4 +1,6 @@
-
+# STRINGS: operators on strings
+#
+# You can use basic operators on Strings, just like other objects:
 
 my_string   = "Uncle"
 your_string = "fonso"

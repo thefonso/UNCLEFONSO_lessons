@@ -11,13 +11,13 @@
     - Boolean
 - Ability to create, manipulate, and use variables
 - String concatenation
-- Comparison operator
+- Comparison operators
 
 ### Points To Ponder
 
 Look through these now and then use them to test yourself after doing the assignment
 
-**Note:** This is again a long list of things to understand! Read through the list, breathe deep, do the assignment, and then come back to them.
+**Note:** This is a long list of things to understand! Read through the list, breathe deep, do the assignment, and then come back to them.
 
 
 ##### Strings

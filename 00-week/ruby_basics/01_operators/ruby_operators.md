@@ -103,7 +103,7 @@ There are following Bitwise operators supported by Ruby language
 | >> | Binary Right Shift Operator. The left operands value is moved right by the number of bits specified by the right operand. | a >> 2 will give 15, which is 0000 1111 |
 
 
-## Ruby Logical Operators:
+## Ruby Logical(Boolean) Operators:
 
 There are following logical operators supported by Ruby language
 
@@ -112,7 +112,7 @@ Assume variable a holds 10 and variable b holds 20, then:
 | Operator | Description | Example |
 |:------------- |:---------------:| -------------:|
 | and | Called Logical AND operator. If both the operands are true, then the condition becomes true. | (a and b) is true. |
-| or | Called Logical OR Operator. If any of the two operands are non zero, then the condition becomes true. | (a or b) is true. |
+| `||` | Called Logical OR Operator. If any of the two operands are non zero, then the condition becomes true. | (a or b) is true. |
 | && | Called Logical AND operator. If both the operands are non zero, then the condition becomes true. | (a && b) is true. |
 | || | Called Logical OR Operator. If any of the two operands are non zero, then the condition becomes true. | (a || b) is true. |
 | ! | Called Logical NOT Operator. Use to reverses the logical state of its operand. If a condition is true, then Logical NOT operator will make false. | !(a && b) is false. |

@@ -19,10 +19,3 @@ for i in 0..5
 end
 
 # GO-TO-LABS
-# >> BREAK: Value of local variable is 0
-# >> BREAK: Value of local variable is 1
-# >> BREAK: Value of local variable is 2
-# >> NEXT: Value of local variable is 2
-# >> NEXT: Value of local variable is 3
-# >> NEXT: Value of local variable is 4
-# >> NEXT: Value of local variable is 5

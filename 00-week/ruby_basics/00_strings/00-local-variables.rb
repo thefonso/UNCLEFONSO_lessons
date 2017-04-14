@@ -1,4 +1,5 @@
 # STRINGS: local variables
+#
 # there are many different types of variables in Ruby, to keep it simple, we are going to start with Local variables. 
 
 five = 5      # five is a variable, 5 is the value it is pointing to

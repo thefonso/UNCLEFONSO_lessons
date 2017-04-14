@@ -1,5 +1,6 @@
 # STRINGS: p
-# One other important output method is the 'p' method. 
+# 
+# Another important output method is the 'p' method. 
 
 
 puts "Rain and lightning"

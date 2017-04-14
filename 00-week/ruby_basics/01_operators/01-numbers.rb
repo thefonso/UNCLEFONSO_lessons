@@ -25,4 +25,4 @@
 (1 + 2) * 3     # => 9
 (91 + 2).even?  # => false
 
-# Do challenges in the labs folder 
+# NO LAB - PROCEED TO CONDITIONALS FOLDER 

@@ -26,4 +26,4 @@
 3 ** 2 # => 9
 
 # BUT THERE'S MORE 
-# To see a full list of operators Open the included Ruby_Operators.pdf
+# To see a full list of operators Open the included ruby_operators.md

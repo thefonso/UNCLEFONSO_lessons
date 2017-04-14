@@ -1,3 +1,4 @@
+# ARRAYS: intro
 # Ruby arrays are ordered, integer-indexed collections of objects. 
 # Each element in an array is associated with and referred to by an index.
 #
