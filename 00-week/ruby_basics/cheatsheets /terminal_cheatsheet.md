@@ -82,6 +82,8 @@ command + w   close window
 command + q   quit program
 command + d   split window
 command + shift + d split window
+command + return  full-screen (same to go back)
+control + L   clear screen
 ```
 
 see open program icons
