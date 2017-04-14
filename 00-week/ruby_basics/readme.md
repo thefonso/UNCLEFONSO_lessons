@@ -42,4 +42,4 @@ Download all this code and play with it in...
 
 Note:
 
-You need to have completed the mac_installfest
+You need to have completed the mac_installfest.md
