@@ -9,3 +9,5 @@ strings = ["leonardo", "donatello", "raphael", "michaelangelo"]
 symbolize = lambda{|x| x.to_sym}
 
 symbols = strings.collect(&symbolize)
+
+symbols # => [:leonardo, :donatello, :raphael, :michaelangelo]

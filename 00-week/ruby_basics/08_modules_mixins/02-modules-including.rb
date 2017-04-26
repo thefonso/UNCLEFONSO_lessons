@@ -23,3 +23,4 @@ OurClass.ancestors # => [OurClass, OurModule, Object, Kernel, BasicObject]
 
 obj = OurClass.new
 obj.meth # => "method from OurModule"
+

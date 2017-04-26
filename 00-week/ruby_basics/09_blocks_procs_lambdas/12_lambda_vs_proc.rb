@@ -1,11 +1,12 @@
+# LAMBDA: lambda vs. proc
+#
 # There are two main differences between Procs and Lambdas...
-
+#
 # 01 a lambda checks the number of arguments passed to it, while a proc does not.
-# TODO: need example here
-
-
+#
 # 02 when a lambda returns, it passes control back to the calling method; 
-#    when a proc returns, it does so immediately, without going back to the calling method.
+#    when a proc returns, it does not pass control back to the calling method.
+
 def batman_ironman_lambda
   victor = lambda { return "Batman will win!" }
   victor.call

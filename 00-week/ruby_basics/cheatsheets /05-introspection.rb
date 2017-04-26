@@ -19,3 +19,9 @@ Fixnum.superclass   # => Integer
 require 'date'
 Date.today.inspect  # => "#<Date: 2017-04-10 ((2457854j,0s,0n),+0s,2299161j)>"
 Date.today.to_s     # => "2017-04-10"
+
+# The .owner and the .receiver methods can be used to ask a method where it lives and who it can be called on. 
+
+method(:puts).owner # => Kernel
+
+method(:puts).receiver # => main

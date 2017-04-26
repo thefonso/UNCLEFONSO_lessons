@@ -1,3 +1,5 @@
+# MODULES: nesting
+#
 # You can nest classes and modules inside of each other.
 class A
   

@@ -1,7 +1,7 @@
 # STRINGS: puts
 #
 # Ruby has several methods for sending text to stdout, the most common of which is 'puts':
-puts "Welcome to the program!"
+# puts "Welcome to the program!"
 
   # Output:
   # Welcome to the program!
@@ -9,7 +9,7 @@ puts "Welcome to the program!"
 
 
 # Notice that puts places a newline after whatever it prints. And puts can print any object, not just strings:
-puts 45
+# puts 45 
 
   # Output:
   # 45
@@ -20,7 +20,7 @@ puts 45
 # and then outputs the strings. It works like this:
 number = 56
 thing_to_print = number.to_s
-thing_to_print # => "56"
+thing_to_print
 puts thing_to_print
 
   # Output:

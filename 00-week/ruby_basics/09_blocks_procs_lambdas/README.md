@@ -8,9 +8,11 @@
 
 #### Points To Ponder
 
-- What are objects and classes?
-- 
-
+- What are the two differences between Proc and Lambda?
+- How do you run a lambda?
+- What are the two ways to write a Block?
+- What does & do and why is this usefull?
+- There are two ways to execute a block passed to your function, what are they?
 
 
 ### Why Procs and why lamdas?

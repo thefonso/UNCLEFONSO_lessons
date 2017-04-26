@@ -4,6 +4,8 @@
 # Example 
 #float
 10.0
+2.5
+0.5
 #and Integer 10
 10
 

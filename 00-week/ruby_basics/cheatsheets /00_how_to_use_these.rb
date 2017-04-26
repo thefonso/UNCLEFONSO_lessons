@@ -12,7 +12,6 @@
 
 #
 # (if you are using Textmate 2)[1] the shortcut for creating this is .... command + shift + control then press E 
-# (if you are using Sublime text)[2] the shortcut for creating this is .... alt + shift + u
 
 # This shows what that line evaluates to, and in the case of a line with just a variable on it (line 7 above), 
 # shows the value of the object it refers to.
@@ -29,7 +28,3 @@ my_var # => 4
 # [3]sublime text download
 # [4]ruby markers for sublime text instruction
 
-# Note: for Sublime Text 2 run "gem install rcodetools" on the command line (terminal).
-# You will need this for the Ruby Marker plug-in.
-# For more info go here...
-# https://sublime.wbond.net/packages/Ruby%20Markers

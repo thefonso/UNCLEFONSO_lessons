@@ -1,10 +1,12 @@
+# PROCS: syntax
+#
 # Procs are easy to define! You just call 
 # Proc.new and pass in the block you 
 # want to save. Here's how we'd create a 
 # proc called cube that cubes a number 
 
 cube = Proc.new { |x| x ** 3 }
-
+ 
 # We can then pass the proc to a method 
 # that would otherwise take a block, 
 # and we don't have to rewrite the 

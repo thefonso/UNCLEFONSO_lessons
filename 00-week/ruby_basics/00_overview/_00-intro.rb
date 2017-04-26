@@ -2,13 +2,14 @@
 #   Written By: Matz (Yukihiro Matsumoto)
 #   First Public Release: 1995
 #
-#   All programing languages adhere to one or many programming Paradigms[1][2].
+#   All programing languages adhere to one or many programming Paradigms.
 #
 #   Ruby is a multi-paradigm language:
 #
 #   What does that mean? 
 #
 #   Paradigms:
+#
 #     1.Imperative - 'first do this, next do that' is a short phrase which in a nutshell describes the imperative paradigm. 
 #     The phrase also reflects that the order of the commands is important. 'First do that, then do this' would be different 
 #     from 'first do this, then do that'.
@@ -22,4 +23,3 @@
 #     program at runtime. 
 #
 #     We will get into each of these later on
-#

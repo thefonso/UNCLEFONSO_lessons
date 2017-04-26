@@ -6,7 +6,6 @@
 ### What are the basics of Ruby (Learning Objectives)
 - Understand the basic data types of Ruby:
     - Numbers
-    - Floats
     - Math
     - Boolean
 - Ability to create, manipulate, and use variables

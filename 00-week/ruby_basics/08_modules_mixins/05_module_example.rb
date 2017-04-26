@@ -1,3 +1,5 @@
+# MODULES: example
+#
 # run this on the cli with ...
 # 
 # ruby 05_module_example.rb
@@ -21,3 +23,4 @@ puts Week::FIRST_DAY
 Week.weeks_in_month
 Week.weeks_in_year
 d1.no_of_months
+
