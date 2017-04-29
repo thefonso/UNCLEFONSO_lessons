@@ -1,18 +1,17 @@
+# LOAD external file via require 
+#
+#
 # When you have code in one file that you want to use in another
-# file, you load it by using require
-defined? Date # => "constant"
-require 'date'
-defined? Date # => "constant"
+# file, you load it by using "require"
 
-# In this case, Ruby looks in several different places to see a 
-# list of locations to look for the file you required. It contains
-# things like the standard library, a set of files with useful
-# things like Date.
+# When you want to load a file that you've written, 
+# you can give Ruby an absolute path to the file.
 
-# When you want to load a file that you've written, it won't be
-# in that path variable, so you must give Ruby an absolute path
-# to the file.
-require File.dirname(__FILE__) + '/08_require_second'
+# Note:
+Dir.pwd # => "/Users/aleph/UNCLEFONSO_live/00-week/ruby_basics"
+
+# here we can include the external file 08_require_second that contains our "there" method...
+require Dir.pwd + "/10_random_coolstuff/08_require_second"
 
 def here
   'from 08_require_first.rb'

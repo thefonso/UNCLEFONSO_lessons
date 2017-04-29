@@ -305,11 +305,16 @@ Check path and ruby version are identical in vim and macvim
 ```
 gem install rcodetools
 
+gem install seeing_is_believing
+
+ADD THESE TWO TO THE _vim install script
+NEEDED FOR vim / macvim having same ruby!!!
+
 https://github.com/t9md/vim-ruby-xmpfilter
 
 https://github.com/tpope/vim-rbenv
 ```
-
+Note: we need https://github.com/thefonso/openvim
 
 ## Additional Tools
 

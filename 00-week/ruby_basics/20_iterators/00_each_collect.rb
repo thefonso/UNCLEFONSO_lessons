@@ -1,4 +1,4 @@
-# Why might you want to enumerate over items in an array.
+# Iterators help you enumerate over items in an array.
 
 
 ### .each Iterator:
@@ -23,3 +23,7 @@ b = Array.new
 b = students.collect{ |student| student + "!" } # => ["frodo baggins!", "samwise gamgee!", "peregrin took!", "meriadoc brandybuck!"]
 
 
+### QUESTION: how are these two diferent?
+#
+# ANSWER: one outputs the result to a new array the other does not. 
+# the other operates on each element from the first and returns the original array

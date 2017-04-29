@@ -4,7 +4,7 @@
 # You will know if you've used one, because the interpreter will tell you.
 # If your text editor highlights it, don't use it. :)
 #
-# If you _really_ want a list, its at:
+# If you _really_ want a full list, its at:
 #
 # https://github.com/ruby/ruby/blob/trunk/defs/keywords
 
