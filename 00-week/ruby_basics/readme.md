@@ -1,38 +1,30 @@
-### Ruby Lessons to get you going. From basic strings to Object Oriented Programming. Just enough Ruby to make you dangerous. Just enough so when we see Rails things will make sense.
+### Ruby Lessons to get you going. From basic strings to Object Oriented Programming. Just enough Ruby to make you dangerous. Just enough so when you see Rails, things will make sense.
 
-* Cheatsheats  
+This is meant to be an easy to use resource and reference to be used while you build projects. Follow along with the videos to help you understand.
 
-```
-├── 00_how_to_use_these.rb
-├── 01_arrays.rb
-├── 01_hashes.rb
-├── README.md
-├── block_proc_lambda.rb
-├── debugging_gems.rb
-├── duck_typing.md
-├── enumerable_methods.rb
-├── faq.md
-├── logic_operators.rb
-├── reflection-introspection.rb
-├── sinatra.rb
-├── strings.rb
-├── terminal_cheatsheet.md
-└── vehicles.rb
-```
+
 
 * Lessons
 
 ```
+├── 00_overview
 ├── 00_strings
-├── 01_conditionals
-├── 02_arrays
-├── 03_hashes
-├── 04_loops
-├── 05_methods
-├── 06_classes
-├── 07_modules_mixins
-├── 08_blocks_procs_lambdas
-├── 09_random_coolstuff
+├── 01_operators
+├── 02_conditionals
+├── 03_arrays
+├── 04_hashes
+├── 05_loops
+├── 05_ranges
+├── 06_methods
+├── 07_classes
+├── 08_modules_mixins
+├── 09_blocks_procs_lambdas
+├── 10_random_coolstuff
+├── 20_iterators
+├── 21_fileIO
+├── 22_exceptions
+├── cheatsheets\
+└── readme.md
 ```
 
 Download all this code and play with it in...
@@ -42,4 +34,4 @@ Download all this code and play with it in...
 
 Note:
 
-You need to have completed the mac_installfest.md
+You need to have completed the [mac_installfest.md](../mac_installfest.md)

@@ -47,3 +47,30 @@ File.exist? "names" # => true
 File.delete "names"
 File.exist? "names" # => false
 
+
+### Creating Files & Temporary Directories: 
+#
+# Temporary files are those that might be created briefly during a program's execution 
+# but aren't a permanent store of information.
+#
+# Dir.tmpdir provides the path to the temporary directory on the current system, 
+# although the method is not available by default. 
+# To make Dir.tmpdir available it's necessary to use require 'tmpdir'.
+#
+# You can use Dir.tmpdir with File.join to create a platform-independent temporary file:
+
+require 'tmpdir'
+   tempfilename = File.join(Dir.tmpdir, "tingtong")
+   tempfile = File.new(tempfilename, "w")
+   tempfile.puts "This is a temporary file"
+   tempfile.close
+   File.delete(tempfilename)
+
+# This code creates a temporary file, writes data to it, and deletes it. 
+# Ruby's standard library also includes a library called Tempfile that can create temporary files for you:
+
+require 'tempfile'
+   f = Tempfile.new('tingtong')
+   f.puts "Hello"
+   puts f.path
+   f.close

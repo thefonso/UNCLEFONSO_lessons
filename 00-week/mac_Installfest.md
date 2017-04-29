@@ -1,4 +1,4 @@
-# Installfest (Mac)
+# Installfest for Mac
 
 **Version note:** Ruby 2.1.2 and Rails 4.0.4 are the standard for the course. If you already have another version installed, I'll either be advancing or rolling you back for consistency.
 
@@ -6,7 +6,7 @@
 
 Macs are required. This set of instructions is meant to guide the Installfest process.
 
-Please check your OS X version before beginning. (Click the Apple menu and choose *About this Mac*.) This set of steps should work for 10.9 - 10.10.5; if you're on another version, let me know.
+Please check your OS X version before beginning. (Click the Apple menu and choose *About this Mac*.) This set of steps should work for 10.10.5 - 10.12.4; if you're on another version, let me know.
 
 
 ## Tools we will Install
@@ -258,17 +258,24 @@ ruby install.rb
 **powerline install instructions**
 
 install the special fonts
+
 ```
-# clone
 git clone https://github.com/powerline/fonts.git
-# install
+```
+install
+
+```
 cd fonts
 ./install.sh
-# clean-up a bit
+```
+clean-up a bit
+
+```
 cd ..
 rm -rf fonts
 ```
 vim-airline
+
 ```
 git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
 ```
