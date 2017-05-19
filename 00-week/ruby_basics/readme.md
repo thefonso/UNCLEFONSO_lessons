@@ -1,10 +1,14 @@
-### Ruby Lessons to get you going. From basic strings to Object Oriented Programming. Just enough Ruby to make you dangerous. Just enough so when you see Rails, things will make sense.
+### Ruby Lessons to get you going. From basic strings to advanced concpets like Object Oriented Programming. This will give you just enough Ruby to make you dangerous. Most lessons contain labs, do them alone or with a pair partner. 
 
-This is meant to be an easy to use resource and reference to be used while you build projects. Follow along with the videos to help you understand.
+### The source repo is also designed to be an easy to use resource and active reference to be used while you build projects. 
 
+### Follow along with the videos to help you understand.
 
+PreReq:
 
-* Lessons
+You need to have completed the [mac_installfest.md](../mac_installfest.md)
+
+Lessons
 
 ```
 ├── 00_overview
@@ -27,11 +31,6 @@ This is meant to be an easy to use resource and reference to be used while you b
 └── readme.md
 ```
 
-Download all this code and play with it in...
+Download all this code and play with it in macvim
 
-- vim
-- macvim
 
-Note:
-
-You need to have completed the [mac_installfest.md](../mac_installfest.md)

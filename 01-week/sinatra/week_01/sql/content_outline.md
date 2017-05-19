@@ -1,0 +1,23 @@
+- SQL
+    - Code Along
+        - Use prepared SQLite database that has a students table (with a name, hair color) and assignments (title, grade, student_id)
+    - Data manipulation language
+        - SELECT
+            - Aggregate functions (functions, just like methods in Ruby, take a column as an argument)
+                - COUNT
+                - MAX
+                - MIN
+                - SUM
+                - AVG
+        - UPDATE
+        - INSERT
+        - DELETE
+    - Data definition language
+        - Data types (make connection to Ruby)
+            - Primary key/Foreign key
+            - Pointers/references (make connection to OOP)
+        - CREATE TABLE
+        - DROP TABLE
+        - ADD COLUMN
+        - REMOVE COLUMN
+    - JOINS

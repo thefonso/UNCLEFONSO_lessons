@@ -1,0 +1,12 @@
+# Gemfile
+source :rubygems
+ 
+gem "sinatra"
+gem "pg"
+gem "sinatra-activerecord"
+gem "activerecord", '~> 3.2.13'
+ 
+group :development do
+  gem "shotgun"
+  gem "tux"
+end

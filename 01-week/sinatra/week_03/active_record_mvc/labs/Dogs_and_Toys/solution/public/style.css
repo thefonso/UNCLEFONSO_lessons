@@ -1,0 +1,41 @@
+* {
+  font-family: Helvetica, Arial, sans-serif;
+  outline: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.clear {
+  clear: both;
+}
+
+nav {
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+nav li {
+  display: inline-block;
+  list-style: none;
+  padding: 20px;
+}
+
+.wrapper {
+  margin: 20px auto;
+  text-align: center;
+  width: 760px;
+}
+
+section {
+  border: 1px dashed green;
+  display: block;
+  float: left;
+  margin: 25px;
+  width: 200px;
+}
+
+img {
+  width: 190px;
+  height: 190px;
+}

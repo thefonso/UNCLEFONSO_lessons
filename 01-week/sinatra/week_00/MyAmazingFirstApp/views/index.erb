@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>My Amazing First App</title>
+    <link href="css/screen.css" type="text/css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <h1>My Amazing First App</h1>
+
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <div>
+      <img src="images/nightbus.jpg" title="Dan in London" alt="Dan on a bus" />
+    </div>
+
+    <div>
+      <form action="/submit" method="POST">
+
+        <h3>What do you think of this photo?</h3>
+
+        <div>
+          <label for="answer">Cool</label>
+          <input type="radio" name="answer" value="cool"/>
+        <div>
+
+        <div>
+          <label for="answer">Not Cool</label>
+          <input type="radio" name="answer" value="not cool" />
+        </div>
+
+        <div>
+          <label for="answer">Undecided</label>
+          <input type="radio" name="answer" value="undecided" />
+        </div>
+
+        <div>
+          <label for="tc">
+            I certify that I am sane and capable of making this
+            decision.
+          <label>
+          <input type="checkbox" name="tc" value="1" />
+        </div>
+
+        <div>
+          <input type="submit" name="submit" value="Submit" />
+        </div>
+
+      </form>
+    </div>
+
+  </body>
+
+</html>
