@@ -1,0 +1,9 @@
+<div id="posts">
+	<% @posts.each do |post| %>
+		<div class="post">
+			<h1 class="post_title"><a href="/post/<%= post.id %>"><%= post.title %></a></h1>
+			<p class="post_body"><%= post.body %></p>
+			<p>created at: <%= post.created_at %></p>
+		</div>
+	<% end %>
+</div>

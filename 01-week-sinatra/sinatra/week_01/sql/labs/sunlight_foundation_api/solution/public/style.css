@@ -1,0 +1,12 @@
+/*republicans should be styled red*/
+.R {
+  color: red;
+}
+/*democrats should be styled in blue*/
+.D {
+  color: blue;
+}
+/*independents should be styled in purple*/
+.I {
+  color: purple;
+}
