@@ -1,6 +1,0 @@
-<form method='post' action='<%= @row.nil? ? "/create" : "/dogs/#{@row['id']}" %>'>
-  <label>Name:</label><input value='<%= @row['name'] if @row %>' type='text' name='name' autofocus>
-  <label>Photo URL:</label><input value='<%= @row['photo'] if @row %>' type='text' name='photo'>
-  <label>Breed:</label><input value='<%= @row['breed'] if @row %>' type='text' name='breed'>
-  <button><%= @row.nil? ? "New Dog" : "Edit Dog"  %></button>
-</form>

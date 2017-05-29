@@ -1,5 +1,0 @@
-development:
-  adapter: postgresql
-  database: sinatra_blog_development
-  username: <%= ENV["PG_USER"] %>
-  host: localhost

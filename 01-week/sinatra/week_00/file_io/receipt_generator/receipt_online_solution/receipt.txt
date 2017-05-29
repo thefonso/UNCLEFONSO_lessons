@@ -1,4 +1,0 @@
-- Company Name: Particular Assembly Inc.
-- Good/Service Provided: Do work
-- Cost: $123.34
-- Thank you for your patronage
