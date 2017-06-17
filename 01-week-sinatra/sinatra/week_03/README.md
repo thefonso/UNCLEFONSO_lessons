@@ -34,4 +34,4 @@ Transitioning over from the end of last week where students learned file I/O, we
 Next week is about Rails MVC, so introducing the various components separately and within the context of what student's learned in week 2 would make the concepts easier to focus on, without the distraction of having to learn a new framework.
 
 ###Instructor Notes
-* Here is a visualization of [SQL joins](http://www.codeproject.com/KB/database/Visual_SQL_Joins/Visual_SQL_JOINS_orig.jpg)
+* Here is a visualization of [SQL joins](Visual_SQL_JOINS_orig.jpg)
