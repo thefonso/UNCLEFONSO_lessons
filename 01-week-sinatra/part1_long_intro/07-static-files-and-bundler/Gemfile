@@ -1,3 +1,0 @@
-source 'https://rubygems.org' # where to look for gems
-gem "sinatra",   "~> 2.0.0"   # our web framework
-gem "rdiscount", "~> 2.2.0.1"   # allows Sinatra to render markdown
