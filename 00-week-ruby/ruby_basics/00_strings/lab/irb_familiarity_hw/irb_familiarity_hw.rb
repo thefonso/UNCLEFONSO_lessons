@@ -7,7 +7,7 @@
 
 # Steps:
 #   1. Open up a new terminal window
-#   2. Launch irb
+#   2. at the prompt type irb
 #   3. Paste a line of code into irb
 #   4. Press return
 #   5. Write down the displayed output
