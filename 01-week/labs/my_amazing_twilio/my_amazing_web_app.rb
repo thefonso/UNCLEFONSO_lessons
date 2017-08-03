@@ -14,8 +14,8 @@ post '/submit' do
   @message = "Someone thought your image was #{params[:answer]}"
   
   # Change these to match your Twilio account settings 
-  @account_sid = "AC4af5936d0ed441b9f4578c1c951be519"
-  @auth_token = "d409d52e7f3d2ee809c94b4d68910013"
+  @account_sid = "<YOUR_ID_NUMBER>"
+  @auth_token = "<YOUR_TOKEN>"
   
   # Set up a client to talk to the Twilio REST API
   @client = Twilio::REST::Client.new(@account_sid, @auth_token)
