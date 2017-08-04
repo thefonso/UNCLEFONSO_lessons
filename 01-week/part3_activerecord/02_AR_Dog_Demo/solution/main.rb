@@ -3,7 +3,7 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'active_support/all'
 require 'active_record'
-require 'protected_attributes'
+require 'pg'
 
 ActiveRecord::Base.establish_connection(
   :adapter => "postgresql",
@@ -14,7 +14,7 @@ ActiveRecord::Base.establish_connection(
 )
 
 class Dog < ActiveRecord::Base
-  attr_accessible :name, :photo, :breed
+
 end
 
 before do
