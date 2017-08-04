@@ -1,32 +1,32 @@
-#Title: Dogs App
+# Title: Dogs App
 
-###Type:
+### Type:
 - Lab
 
-###Summary
+### Summary
 Learn to use active record to abstract SQL queries.
 
-###Estimated Time:
+### Estimated Time:
 - 2hrs
 
-###Prerequisites:
+### Prerequisites:
 - Sinatra
 - SQL
 - Databases
 
-###Objectives:
+### Objectives:
 - Integrate active record with sinatra app
 - Object wrappers for database entries, model.
 - Basic active record methods for CRUD
 
-###Activity:
+### Activity:
 We will build an application to store dogs, breeds, and images in a database using Active Record
 
 ## How to lead the lesson
 You should already know/have this app from the SQL module.  After introducing active record we will rewrite the app using Active record models instead
 
 
-###Specification:
+### Specification:
 
 - The Dog model with name, breed, and image URL attributes
 - App Routes:

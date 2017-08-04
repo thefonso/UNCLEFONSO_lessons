@@ -1,18 +1,18 @@
-###Title: Dog Demo
+### Title: Dog Demo
 
-###Type:
+### Type:
 - Walkthrough/Codealong
 
 
 
-###Prerequisites:
+### Prerequisites:
 
 - HTML
 - CSS
 - Sinatra
 - SQL
 
-###Objectives:
+### Objectives:
 - Create a Sinatra app that will store dog records in a database.
 - Learn basic CRUD SQL statements
 
@@ -32,7 +32,7 @@ $ createdb dogdb
 $ psql -d dogdb -f dogs.sql
 ```
 
-###Issues
+### Issues
 
 - may require `gem install sinatra-contrib`
 

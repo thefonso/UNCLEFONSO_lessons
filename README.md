@@ -27,3 +27,10 @@ we will start with an introduction to the Ruby language and then move to basic h
 4. Rails app 2 ( team based )
 
 ---
+
+INDEX - (wip: this will be updated as I fill out all the curriculum)
+
+* 00-prep  - prep week install tools and dev environment
+* 00-week  - Basic ruby
+* 01-week  - Sinatra
+* 02-week  - Rails
