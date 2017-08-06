@@ -67,9 +67,3 @@ post '/create' do
   redirect to('/dogs')
 end
 
-def run_sql(sql)
-  conn = PG.connect(:dbname =>'dogdb', :host => 'localhost')
-  result = conn.exec(sql)
-  conn.close
-  result
-end
