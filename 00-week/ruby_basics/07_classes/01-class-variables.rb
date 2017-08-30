@@ -27,7 +27,7 @@ class Customer
       @cust_addr=addr
    end
    
-   #To display a variable in a string preceed it with the # symbol
+   #To display a variable in a string precede it with the # symbol
    def display_details()
       puts "Customer id #@cust_id"
       puts "Customer name #@cust_name"

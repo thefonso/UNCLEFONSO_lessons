@@ -16,8 +16,6 @@ Ruby syntax: BEGIN / RESCUE / ELSE / ENSURE
 
 Whenever accessing resources you don't control, such as external sites, api's, uploaded files, upload/download operations  
 
-Whenever there are  things that are out of your control, or could possible go horribly wrong  
-
 Then it is good practice to start working with rescues – they will save you when there are errors.
 
 **The errors in the code examples are there deliberately.  The object in this module is *not* to fix the code, it's to handle errors.**   
