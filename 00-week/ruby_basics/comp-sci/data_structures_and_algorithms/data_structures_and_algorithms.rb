@@ -82,7 +82,7 @@ puts
 # Algorithm description
 # ---------------------
 # - Divide the array into two parts, and compare the result of
-#   largest_number_rec on the parts. Return the larger result
+#   largest_number_rec on the parts.
 # - If the array length is <= 2, return the larger
 #   of the two numbers (or the number itself)
 
@@ -107,7 +107,7 @@ end
 # -------
 puts "Largest number recursively:"
 puts "List: " + (arr = [2,4,5,6,40,23,98,83]).to_s
-puts "Largest number: " + largest_number_rec([2,4,5,6,40,23,98,83]).to_s
+puts "Largest number: " + largest_number_rec([2,4,5,6,40,23,98,83]).to_s # =>
 puts
 
 
@@ -459,6 +459,11 @@ stack_as_array
 # Array#unshift
 # Ruby's memory allocation for arrays
 # Ruby's copy on write optimization
+
+# TODO - DERIVE FROM ARTICLE
+
+
+
 
 # Graph
 # =====

@@ -4,20 +4,20 @@
 #
 # Local variables: Local variables are the variables that are defined in a method. 
 #                  Local variables are not available outside the method.
-#                  localVar
+                  localVar
 #
 # Instance Variables: Instance variables are available across methods for any particular instance of the object.
 #                     Instance variables change from object to object.
-#                     @InstanceVar
+                     @InstanceVar
 #
 # Class Variables: Class variables are available across different objects. 
 #                  A class variable belongs to the class and is a characteristic of a class. 
-#                  @@ClassVar
+                  @@ClassVar
 #
 # Global Variables: Class variables are not available across classes. 
 #                   If you want to have a single variable, which is available across classes, 
 #                   you need to define a global variable. 
-#                   $GlobalVar
+                   $GlobalVar
 
 class Customer
    @@no_of_customers=0

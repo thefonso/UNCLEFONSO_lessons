@@ -212,3 +212,9 @@ def sum( x , y , z )
 end
 a = [1,2,3]
 sum(*a)                         # => 6
+
+# ==========STRINGS===============
+
+  # split a string into an array of letters
+
+"a string".split("") # => ["a", " ", "s", "t", "r", "i", "n", "g"]

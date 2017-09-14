@@ -15,15 +15,15 @@
 # - If the minimum is ever greater than the maximum, the number is not
 #   in the list
 
-def binary_search_rec arr, target, min_index = 0, max_index = arr.length - 1
+def binary_search_recursive arr, target, min_index = 0, max_index = arr.length - 1
   return nil if min_index > max_index
 
   midpoint = (max_index + min_index)/2
 
   if arr[midpoint] > target
-    return binary_search_rec(arr, target, min_index, midpoint - 1)
+    return binary_search_recursive(arr, target, min_index, midpoint - 1)
   elsif arr[midpoint] < target
-    return binary_search_rec(arr, target, midpoint + 1, max_index)
+    return binary_search_recursive(arr, target, midpoint + 1, max_index)
   elsif arr[midpoint] == target
     return midpoint
   end
@@ -34,5 +34,5 @@ end
 puts "Binary search recursively:"
 puts "List: " + (arr = [1,2,3,4,5,6,7,8,9]).to_s
 puts "Target: " + (target = 3).to_s
-puts "Found at index: " + binary_search_rec(arr, target).to_s
+puts "Found at index: " + binary_search_recursive(arr, target).to_s
 puts

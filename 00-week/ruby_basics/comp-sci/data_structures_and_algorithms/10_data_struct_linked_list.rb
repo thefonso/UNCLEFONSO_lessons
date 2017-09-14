@@ -1,165 +1,206 @@
-# Linked List
-# ===========
+# LINKED LIST
 
 # Linked List, ruby's missing data structure
 # https://www.sitepoint.com/rubys-missing-data-structure/
 
-# Key points
-# ----------
-# Array#unshift
-# Ruby's memory allocation for arrays
-# Ruby's copy on write optimization
+# THEORETICAL - what is happening here?
+# =======================================
 
-# Graph
-# =====
-# e.g. Social media connections graph:
-# (1) John Doe --------- (5) Mary Jane
-#   |   \
-#   |    \
-#   |   (2) Martin Nyaga
-#   |          \
-#   |           \
-#   |            \
-#   |             \
-# (3) Jane Doe --- (4) Peter Dane
+# TODO ?????
+class Node
+  attr_accessor :value, :next_node
 
-# Represented as an edge list
-# i.e. List of arrays representing connections between vertices
-graph_edge_list =
-    [
-        [1,5],
-        [1,2],
-        [1,3],
-        [3,4],
-        [2,4]
-    ]
-
-# Represented as an adjacency matrix
-# i.e. matrix with 1s in positions showing adjacent vertices
-graph_adjacency_matrix =
-    [
-        [0, 1, 1, 0, 1],
-        [1, 0, 0, 1, 0],
-        [1, 0, 0, 1, 0],
-        [0, 1, 1, 0, 0],
-        [1, 0, 0, 0, 0]
-    ]
-
-# Represented as Adjacency list
-# i.e. list of all vertices, each with a list of its adjacent vertices
-graph_adjacency_list =
-    {
-        1 => [2, 3, 5],
-        2 => [1, 4],
-        3 => [1, 4],
-        4 => [2, 3],
-        5 => [1]
-    }
-
-# - Graph class that takes in a list of edges and
-#   builds an  internal adjacency list
-# - Supports adding and removing edges
-# - Uses a breadth first search to find the shortest path between elements
-#   shortest path algorithm
-# - Still could use a lot of optimisations, and does not cover a lot of the more
-#   complicated things that graphs can be used for, but this works as a fundamental representation
-
-
-# See Khan Academy Algorithms Course for full explanation and implementation in javascript
-# https://www.khanacademy.org/computing/computer-science/algorithms/
-
-class Graph
-  attr_accessor :adjacency_list
-
-  def initialize edges
-    @adjacency_list = {}
-
-    edges.each do |edge|
-      add_edge edge
-    end
+  def initialize(value = nil)
+    @value = value
+    @next_node = nil
   end
 
-  def add_edge edge
-    @adjacency_list[edge[0]] ||= []
-    @adjacency_list[edge[0]].push(edge[1])
+  def to_s
+    @value || nil
+  end
+end
 
-    @adjacency_list[edge[1]] ||= []
-    @adjacency_list[edge[1]].push(edge[0])
+class SinglyLinkedList
+  attr_accessor :head
+
+  def initialize(first_value=nil)
+    # initializes the linked list
+    @head = Node.new(first_value) if first_value
   end
 
-  def remove_edge edge
-    @adjacency_list[edge[0]] ||= []
-    @adjacency_list[edge[0]].delete(edge[1])
-
-    @adjacency_list[edge[1]] ||= []
-    @adjacency_list[edge[1]].delete(edge[0])
+  def insertAfter(node, new_node)
+    # adds the new_node after node
+    new_node.next_node = node.next_node
+    node.next_node = new_node
   end
 
-  def shortest_path_between source, target
-    bfs_info = perform_bfs(source)
-    current_target = target
-    path = [target]
-
-    while bfs_info[target][:predecessor] != source
-      return [] if bfs_info[target][:predecessor] == nil
-      path.push bfs_info[target][:predecessor]
-      target = bfs_info[target][:predecessor]
-    end
-
-    path.push source
-    return path.reverse.join(" -> ")
+  def prepend(value)
+    #prepend to the beginning
+    node = Node.new(value)
+    node.next_node = @head.new_node
+    @head = node
   end
 
-  def perform_bfs source
-    bfs_info = {}
+  def append(value)
+    # append to the end
+    node = Node.new(value)
+    self.last.next_node = node
+  end
 
-    @adjacency_list.each do |k, v|
-      bfs_info[k] = { distance: nil, predecessor: nil }
+  def remove
+    # removes the first node
+    node = @head
+    @head = node.next_node
+  end
+
+  def last
+    # get's the last node
+    node = @head
+    while node.next_node
+      node = node.next_node
     end
+    node
+  end
 
-    bfs_info[source][:distance] = 0
+  # Recursive last method -- Optional
+  # def last_r
 
-    queue = Queue.new
-    queue.enqueue source
+  # end
 
-    while !queue.empty?
-      current_item = queue.dequeue
-
-      @adjacency_list[current_item].each do |item|
-        next if bfs_info[item][:distance] != nil
-        bfs_info[item][:predecessor] = current_item
-        bfs_info[item][:distance] = bfs_info[current_item][:distance] + 1
-        queue.enqueue item
-      end
+  def length
+    # calculates the length of the list
+    counter = @head ? 1 : 0
+    node = @head
+    while node.next_node
+      node = node.next_node
     end
+    counter
+  end
 
-    return bfs_info
+  def find(input)
+    # returns the node with that value or nil if none found
+    node = @head
+    while node.next_node && node.to_s != input
+      node = node.next_node
+    end
+    node if node.to_s == input
+  end
+
+  def reverse
+    # returns a new SinglyLinkedList with all elements reversed
+  end
+
+  def reverse!
+
   end
 
 end
 
 
-# Example
-# -------
+# class SinglyLinkedList
+#   attr_accessor :head
 
-puts "Graph represented as edge list:"
-print graph_edge_list
-puts
+#   def initialize(first_value=nil)
+#     @head = Node.new(first_value) if first_value
+#   end
 
-puts "Graph represented as adjacency list:"
-graph = Graph.new(graph_edge_list)
-puts graph.adjacency_list
+#   def add(value)
+#     # adds a new node to the list, makes it the new head, and links it
+#     # to the former head
+#     new_node = Node.new(value)
+#     last.next_node = new_node
+#   end
 
-puts "Add edge 3-2:"
-graph.add_edge([3,2])
-puts graph.adjacency_list
+#   def remove
+#     # finds out what the head's next node is, deletes the head, and
+#     # makes the next node the new head
 
-puts "Remove edge 3-2:"
-graph.remove_edge([3,2])
-puts graph.adjacency_list
+#     # Slightly safer code
+#     old_head = @head
+#     new_head = @head.next_node
+#     old_head.next_node = nil
+#     old_head.value = nil
+#     @head = new_head
 
-puts "Shortest path between 4 and 5:"
-puts graph.shortest_path_between(4,5)
+#     # Necessary code
+#     # @head = @head.next_node
+#   end
 
-puts "Shortest path between 2 and 3:"
-puts graph.shortest_path_between(2,3)
+#   # Looping last
+#   def last
+#     node = @head
+#     while node.next_node
+#       node = node.next_node
+#     end
+#     node
+#   end
+
+#   # Recursive last method -- Optional
+#   # def last(node)
+#   #   if node.next_node
+#   #     last(node.next_node)
+#   #   else
+#   #     node
+#   #   end
+#   # end
+
+#   def length
+#     counter = 0
+#     if @head
+#       node = @head
+#       counter += 1
+#       while node.next_node
+#         node = node.next_node
+#         counter += 1
+#       end
+#     end
+#     counter
+#   end
+
+#   def length
+#     counter = 0
+#     current_node = @head
+#     while current_node
+#       current_node = current_node.next_node
+#       counter += 1
+#     end
+#     counter
+#   end
+
+#   def append(value)
+#     # adds node with this value at the tail
+#     current_last = self.last
+#     current_last.next_node = Node.new(value)
+#   end
+
+#   def find(input)
+#     # returns the node with that value or nil if none found
+#     node = @head
+#     while node.value != input
+#       node = node.next_node
+#     end
+#     node
+#   end
+
+#   def find(value)
+#     current_node = @head
+#     if current_node
+#       while current_node.to_s != value
+#         if current_node.next_node
+#           current_node = current_node.next_node
+#         else
+#           return nil
+#         end
+#       end
+#       current_node
+#     end
+#   end
+
+#   def reverse
+#     # returns a new SinglyLinkedList with all elements reversed
+#   end
+
+#   def reverse!
+#   end
+
+# end
