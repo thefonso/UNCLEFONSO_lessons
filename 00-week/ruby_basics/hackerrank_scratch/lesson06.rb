@@ -26,13 +26,13 @@
 # and odd indices into another value
 
 # 4. action: add odd + even into new string
-require 'pry'
+# require 'pry'
 
 
 class SomeName
   attr_reader :t, :one, :two
 
-  def initialize(t,one,two)
+  def initialize(t, one, two)
     @t    = t
     @one  = one
     @two  = two
@@ -64,5 +64,7 @@ class SomeName
 
 end
 
-somename = SomeName.new ARGV[0], ARGV[1], ARGV[2]
+# somename = SomeName.new ARGV[0], ARGV[1], ARGV[2]
+somename = SomeName.new 2, "Hacker", "Rank"
+
 somename.split_array
