@@ -1,7 +1,7 @@
 # =====  Reflection and Introspection (they're synonyms)  =====
 # it is very useful to see what kind of an object you are dealing with
 # what your environment is like, etc
-# these methods are usefull for this purpose
+# these methods are useful for this purpose
 #
 # the pound between the class and the method indicates that it is an instance method
 #   Object#inspect
@@ -23,8 +23,9 @@
 #
 
 
-# examples
+# EXAMPLES
 require 'date'  # pulls in date class from the stdlib
+
 class Person
   # class level
   IS_HUMAN = true
@@ -32,15 +33,18 @@ class Person
   class << self
     def human?() IS_HUMAN end
   end
-  
+
   # instance level
-  attr_accessor :birthday
+  attr_accessor :name, :age, :birthday
+
   def initialize(name,age,birthday)
-    @name , @age , @birthday = name , age , birthday
+    @name = name
+    @age = age
+    @birthday = birthday
   end
-  
 end
-thefonso = Person.new 'Alfonso' , 42 , Date.parse('14 Jul 1972')
+
+thefonso = Person.new 'Alfonso', 42, Date.parse('14 Jul 1972')
 
 # what class is the object?
 1.class                             # => Fixnum

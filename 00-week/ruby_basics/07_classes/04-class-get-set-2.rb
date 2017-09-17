@@ -1,4 +1,4 @@
-# Using set_whatever and get_whatever is kind of
+# Using set_miles and get_miles is kind of
 # distracting. It's better to name your setters
 # and getters the same as the variable they represent.
 
