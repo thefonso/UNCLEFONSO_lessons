@@ -2,6 +2,7 @@
 # A Doubly Linked List (DLL) contains an extra pointer,
 # typically called previous pointer, together with next pointer
 # and data which are there in singly linked list.
+# http://www.geeksforgeeks.org/doubly-linked-list/
 
 # Advantages over singly linked list
 # 1) A DLL can be traversed in both forward and backward direction.

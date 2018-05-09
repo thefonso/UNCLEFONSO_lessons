@@ -1,6 +1,7 @@
 #Session & Cookie Lab
 This is a contact form that captures a user's information and stores it for viewing later.  
 There is no database, so we need to use sessions and cookies to persist the data between page loads.
+
 Note: gem install sinatra-contrib
 
 1. First, get the contact form showing on the root url ( / )

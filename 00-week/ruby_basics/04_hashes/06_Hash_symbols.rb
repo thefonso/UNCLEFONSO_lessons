@@ -2,11 +2,11 @@
 
 #Using symbols will speed up your hash. Let’s talk about why…
 
-'this is a string'.object_id # => 70339115697540
-'this is a string'.object_id # => 70339115697140
+'this is a string'.object_id # => 70317418489400
+'this is a string'.object_id # => 70317418487820
 
-:this_is_a_symbol.object_id # => 420328
-:this_is_a_symbol.object_id # => 420328
+:this_is_a_symbol.object_id # => 914908
+:this_is_a_symbol.object_id # => 914908
 
 
 
