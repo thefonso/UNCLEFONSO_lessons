@@ -133,7 +133,7 @@ This default configuration assumes a standard Rails app with Active Record. You 
 
 Finally you will need to tell Heroku how to run your Rails app by creating a Procfile in the root of your application directory.
 
-##Add a Procfile:
+## Add a Procfile:
 
 	touch Procfile
 	(note: the case is important!)
@@ -225,15 +225,15 @@ A - Yes but if you do so ... you're gonna have a bad time...use migrations inste
 
 
 
-###cool extras
+### cool extras
 
 [https://www.heroku.com/postgres](https://www.heroku.com/postgres)
 
-####Stack Overflow assist
+#### Stack Overflow assist
 
 [http://stackoverflow.com/questions/13868730/socket-file-var-pgsql-socket-s-pgsql-5432-missing-in-mountain-lion-os-x-ser](http://stackoverflow.com/questions/13868730/socket-file-var-pgsql-socket-s-pgsql-5432-missing-in-mountain-lion-os-x-ser)
 
-###source
+### source
 
 [http://postgresguide.com/setup/users.html](http://postgresguide.com/setup/users.html)
 
