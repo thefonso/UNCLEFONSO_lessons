@@ -1,0 +1,689 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>ruby-prof call tree</title>
+<style type="text/css">
+<!--
+body {
+    font-size:70%;
+    padding:0px;
+    margin:5px;
+    margin-right:0px;
+    margin-left:0px;
+    background: #ffffff;
+}
+ul {
+    margin-left:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding-left:0px;
+    list-style-type:none;
+}
+li {
+    margin-left:11px;
+    padding:0px;
+    white-space:nowrap;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+.thread {
+    margin-left:11px;
+    background:#708090;
+    padding-top:3px;
+    padding-left:12px;
+    padding-bottom:2px;
+    border-left:1px solid #CCCCCC;
+    border-top:1px solid #CCCCCC;
+    font-weight:bold;
+}
+.hidden {
+    display:none;
+    width:0px;
+    height:0px;
+    margin:0px;
+    padding:0px;
+    border-style:none;
+}
+.color01 { background:#adbdeb }
+.color05 { background:#9daddb }
+.color0 { background:#8d9dcb }
+.color1 { background:#89bccb }
+.color2 { background:#56e3e7 }
+.color3 { background:#32cd70 }
+.color4 { background:#a3d53c }
+.color5 { background:#c4cb34 }
+.color6 { background:#dcb66d }
+.color7 { background:#cda59e }
+.color8 { background:#be9d9c }
+.color9 { background:#cf947a }
+#commands {
+    font-size:10pt;
+    padding:10px;
+    margin-left:11px;
+    margin-bottom:0px;
+    margin-top:0px;
+    background:#708090;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+#titlebar {
+    font-size:10pt;
+    padding:10px;
+    margin-left:11px;
+    margin-bottom:0px;
+    margin-top:10px;
+    background:#8090a0;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+#help {
+    font-size:10pt;
+    padding:10px;
+    margin-left:11px;
+    margin-bottom:0px;
+    margin-top:0px;
+    background:#8090a0;
+    display:none;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+#sentinel {
+    height: 400px;
+    margin-left:11px;
+    background:#8090a0;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+ }
+input { margin-left:10px; }
+-->
+</style>
+<script type="text/javascript">
+/*
+   Copyright (C) 2005,2009  Stefan Kaes
+   skaes@railsexpress.de
+*/
+
+function rootNode() {
+  return currentThread;
+}
+
+function hideUL(node) {
+  var lis = node.childNodes
+  var l = lis.length;
+  for (var i=0; i < l ; i++ ) {
+    hideLI(lis[i]);
+  }
+}
+
+function showUL(node) {
+  var lis = node.childNodes;
+  var l = lis.length;
+  for (var i=0; i < l ; i++ ) {
+    showLI(lis[i]);
+  }
+}
+
+function findUlChild(li){
+  var ul = li.childNodes[2];
+  while (ul && ul.nodeName != "UL") {
+    ul = ul.nextSibling;
+  }
+  return ul;
+}
+
+function isLeafNode(li) {
+  var img = li.firstChild;
+  return (img.src.indexOf('empty.png') > -1);
+}
+
+function hideLI(li) {
+  if (isLeafNode(li))
+    return;
+
+  var img = li.firstChild;
+  img.src = 'plus.png';
+
+  var ul = findUlChild(li);
+  if (ul) {
+    ul.style.display = 'none';
+    hideUL(ul);
+  }
+}
+
+function showLI(li) {
+  if (isLeafNode(li))
+    return;
+
+  var img = li.firstChild;
+  img.src = 'minus.png';
+
+  var ul = findUlChild(li);
+  if (ul) {
+    ul.style.display = 'block';
+    showUL(ul);
+  }
+}
+
+function toggleLI(li) {
+  var img = li.firstChild;
+  if (img.src.indexOf("minus.png")>-1)
+    hideLI(li);
+  else {
+    if (img.src.indexOf("plus.png")>-1)
+      showLI(li);
+  }
+}
+
+function aboveThreshold(text, threshold) {
+  var match = text.match(/\d+[.,]\d+/);
+  return (match && parseFloat(match[0].replace(/,/, '.'))>=threshold);
+}
+
+function setThresholdLI(li, threshold) {
+  var img = li.firstChild;
+  var text = img.nextSibling;
+  var ul = findUlChild(li);
+
+  var visible = aboveThreshold(text.nodeValue, threshold) ? 1 : 0;
+
+  var count = 0;
+  if (ul) {
+    count = setThresholdUL(ul, threshold);
+  }
+  if (count>0) {
+    img.src = 'minus.png';
+  }
+  else {
+    img.src = 'empty.png';
+  }
+  if (visible) {
+    li.style.display = 'block'
+  }
+  else {
+    li.style.display = 'none'
+  }
+  return visible;
+}
+
+function setThresholdUL(node, threshold) {
+  var lis = node.childNodes;
+  var l = lis.length;
+
+  var count = 0;
+  for ( var i = 0; i < l ; i++ ) {
+    count = count + setThresholdLI(lis[i], threshold);
+  }
+
+  var visible = (count > 0) ? 1 : 0;
+  if (visible) {
+    node.style.display = 'block';
+  }
+  else {
+    node.style.display = 'none';
+  }
+  return visible;
+}
+
+function toggleChildren(img, event) {
+  event.cancelBubble=true;
+
+  if (img.src.indexOf('empty.png') > -1)
+    return;
+
+  var minus = (img.src.indexOf('minus.png') > -1);
+
+  if (minus) {
+    img.src = 'plus.png';
+  }
+  else
+    img.src = 'minus.png';
+
+  var li = img.parentNode;
+  var ul = findUlChild(li);
+  if (ul) {
+    if (minus)
+      ul.style.display = 'none';
+    else
+      ul.style.display = 'block';
+  }
+  if (minus)
+    moveSelectionIfNecessary(li);
+}
+
+function showChildren(li) {
+  var img = li.firstChild;
+  if (img.src.indexOf('empty.png') > -1)
+    return;
+  img.src = 'minus.png';
+
+  var ul = findUlChild(li);
+  if (ul) {
+    ul.style.display = 'block';
+  }
+}
+
+function setThreshold() {
+ var tv = document.getElementById("threshold").value;
+ if (tv.match(/[0-9]+([.,][0-9]+)?/)) {
+   var f = parseFloat(tv.replace(/,/, '.'));
+   var threads = document.getElementsByName("thread");
+   var l = threads.length;
+   for ( var i = 0; i < l ; i++ ) {
+     setThresholdUL(threads[i], f);
+   }
+   var p = selectedNode;
+   while (p && p.style.display=='none')
+     p=p.parentNode.parentNode;
+   if (p && p.nodeName=="LI")
+    selectNode(p);
+ }
+ else {
+   alert("Please specify a decimal number as threshold value!");
+ }
+}
+
+function collapseAll(event) {
+  event.cancelBubble=true;
+  var threads = document.getElementsByName("thread");
+  var l = threads.length;
+  for ( var i = 0; i < l ; i++ ) {
+    hideUL(threads[i]);
+  }
+  selectNode(rootNode(), null);
+}
+
+function expandAll(event) {
+  event.cancelBubble=true;
+  var threads = document.getElementsByName("thread");
+  var l = threads.length;
+  for ( var i = 0; i < l ; i++ ) {
+    showUL(threads[i]);
+  }
+}
+
+function toggleHelp(node) {
+  var help = document.getElementById("help");
+  if (node.value == "Show Help") {
+    node.value = "Hide Help";
+    help.style.display = 'block';
+  }
+  else {
+    node.value = "Show Help";
+    help.style.display = 'none';
+  }
+}
+
+var selectedNode = null;
+var selectedColor = null;
+var selectedThread = null;
+
+function descendentOf(a,b){
+  while (a!=b && b!=null)
+    b=b.parentNode;
+  return (a==b);
+}
+
+function moveSelectionIfNecessary(node){
+  if (descendentOf(node, selectedNode))
+    selectNode(node, null);
+}
+
+function selectNode(node, event) {
+  if (event) {
+    event.cancelBubble = true;
+    thread = findThread(node);
+    selectThread(thread);
+  }
+  if (selectedNode) {
+    selectedNode.style.background = selectedColor;
+  }
+  selectedNode = node;
+  selectedColor = node.style.background;
+  selectedNode.style.background = "red";
+  selectedNode.scrollIntoView();
+  window.scrollBy(0,-400);
+}
+
+function moveUp(){
+  var p = selectedNode.previousSibling;
+  while (p && p.style.display == 'none')
+    p = p.previousSibling;
+  if (p && p.nodeName == "LI") {
+    selectNode(p, null);
+  }
+}
+
+function moveDown(){
+  var p = selectedNode.nextSibling;
+  while (p && p.style.display == 'none')
+    p = p.nextSibling;
+  if (p && p.nodeName == "LI") {
+    selectNode(p, null);
+  }
+}
+
+function moveLeft(){
+  var p = selectedNode.parentNode.parentNode;
+  if (p && p.nodeName=="LI") {
+    selectNode(p, null);
+  }
+}
+
+function moveRight(){
+  if (!isLeafNode(selectedNode)) {
+    showChildren(selectedNode);
+    var ul = findUlChild(selectedNode);
+    if (ul) {
+      selectNode(ul.firstChild, null);
+    }
+  }
+}
+
+function moveForward(){
+  if (isLeafNode(selectedNode)) {
+    var p = selectedNode;
+    while ((p.nextSibling == null || p.nextSibling.style.display=='none') && p.nodeName=="LI") {
+      p = p.parentNode.parentNode;
+    }
+    if (p.nodeName=="LI")
+      selectNode(p.nextSibling, null);
+  }
+  else {
+    moveRight();
+  }
+}
+
+function isExpandedNode(li){
+  var img = li.firstChild;
+  return(img.src.indexOf('minus.png')>-1);
+}
+
+function moveBackward(){
+  var p = selectedNode;
+  var q = p.previousSibling;
+  while (q != null && q.style.display=='none')
+    q = q.previousSibling;
+  if (q == null) {
+    p = p.parentNode.parentNode;
+  } else {
+    while (!isLeafNode(q) && isExpandedNode(q)) {
+      q = findUlChild(q).lastChild;
+      while (q.style.display=='none')
+        q = q.previousSibling;
+    }
+    p = q;
+  }
+  if (p.nodeName=="LI")
+    selectNode(p, null);
+}
+
+function moveHome() {
+  selectNode(currentThread);
+}
+
+var currentThreadIndex = null;
+
+function findThread(node){
+  while (node && node.parentNode.nodeName!="BODY") {
+    node = node.parentNode;
+  }
+  return node.firstChild;
+}
+
+function selectThread(node){
+  var threads = document.getElementsByName("thread");
+  currentThread = node;
+  for (var i=0; i<threads.length; i++) {
+    if (threads[i]==currentThread.parentNode)
+      currentThreadIndex = i;
+  }
+}
+
+function nextThread(){
+  var threads = document.getElementsByName("thread");
+  if (currentThreadIndex==threads.length-1)
+    currentThreadIndex = 0;
+  else
+    currentThreadIndex += 1
+  currentThread = threads[currentThreadIndex].firstChild;
+  selectNode(currentThread, null);
+}
+
+function previousThread(){
+  var threads = document.getElementsByName("thread");
+  if (currentThreadIndex==0)
+    currentThreadIndex = threads.length-1;
+  else
+    currentThreadIndex -= 1
+  currentThread = threads[currentThreadIndex].firstChild;
+  selectNode(currentThread, null);
+}
+
+function switchThread(node, event){
+  event.cancelBubble = true;
+  selectThread(node.nextSibling.firstChild);
+  selectNode(currentThread, null);
+}
+
+function handleKeyEvent(event){
+  var code = event.charCode ? event.charCode : event.keyCode;
+  var str = String.fromCharCode(code);
+  switch (str) {
+    case "a": moveLeft();  break;
+    case "s": moveDown();  break;
+    case "d": moveRight(); break;
+    case "w": moveUp();    break;
+    case "f": moveForward(); break;
+    case "b": moveBackward(); break;
+    case "x": toggleChildren(selectedNode.firstChild, event); break;
+    case "*": toggleLI(selectedNode); break;
+    case "n": nextThread(); break;
+    case "h": moveHome(); break;
+    case "p": previousThread(); break;
+  }
+}
+document.onkeypress=function(event){ handleKeyEvent(event) };
+
+window.onload=function(){
+  var images = document.getElementsByTagName("img");
+  for (var i=0; i<images.length; i++) {
+    var img = images[i];
+    if (img.className == "toggle") {
+      img.onclick = function(event){ toggleChildren(this, event); };
+    }
+  }
+  var divs = document.getElementsByTagName("div");
+  for (i=0; i<divs.length; i++) {
+    var div = divs[i];
+    if (div.className == "thread")
+      div.onclick = function(event){ switchThread(this, event) };
+  }
+  var lis = document.getElementsByTagName("li");
+  for (var i=0; i<lis.length; i++) {
+    lis[i].onclick = function(event){ selectNode(this, event); };
+  }
+  var threads = document.getElementsByName("thread");
+  currentThreadIndex = 0;
+  currentThread = threads[0].firstChild;
+  selectNode(currentThread, null);
+}
+</script>
+</head><body><div style="display: inline-block;">
+<div id="titlebar">
+Call tree for application <b>/Users/philco/.rvm/gems/ruby-1.9.3-p448/bin/ruby-prof </b><br/>
+Generated on 2013-08-19 13:33:46 -0400 with options {:min_percent=&gt;0, :sort_method=&gt;nil}<br/>
+</div>
+<div id="commands">
+<span style="font-size: 11pt; font-weight: bold;">Threshold:</span>
+<input value="1.0" size="3" id="threshold" type="text">
+<input value="Apply" onclick="setThreshold();" type="submit">
+<input value="Expand All" onclick="expandAll(event);" type="submit">
+<input value="Collapse All" onclick="collapseAll(event);" type="submit">
+<input value="Show Help" onclick="toggleHelp(this);" type="submit">
+</div>
+<div style="display: none;" id="help">
+<img src="empty.png"> Enter a decimal value <i>d</i> into the threshold field and click "Apply"
+to hide all nodes marked with time values lower than <i>d</i>.<br>
+<img src="empty.png"> Click on "Expand All" for full tree expansion.<br>
+<img src="empty.png"> Click on "Collapse All" to show only top level nodes.<br>
+<img src="empty.png"> Use a, s, d, w as in Quake or Urban Terror to navigate the tree.<br>
+<img src="empty.png"> Use f and b to navigate the tree in preorder forward and backwards.<br>
+<img src="empty.png"> Use x to toggle visibility of a subtree.<br>
+<img src="empty.png"> Use * to expand/collapse a whole subtree.<br>
+<img src="empty.png"> Use h to navigate to thread root.<br>
+<img src="empty.png"> Use n and p to navigate between threads.<br>
+<img src="empty.png"> Click on background to move focus to a subtree.<br>
+</div>
+<div class="thread">Thread: 70162342693340, Fiber: 70162355279880 (100.00% ~ 0.0009620000000000184)</div><ul name="thread"><li class="color05" style="display:block"><img src="empty.png"> 7.17% (7.17%) IO#set_encoding [1 calls, 2 total]
+</li><li class="color01" style="display:none"><img src="empty.png"> 0.31% (0.31%) IO#set_encoding [1 calls, 2 total]
+</li><li class="color8" style="display:block"><img class="toggle" src="minus.png"> 89.50% (89.50%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=1">Global#[No method]</a> [1 calls, 2 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 31.60% (35.31%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 30.04% (95.07%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 28.79% (95.85%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 25.16% (87.36%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 24.53% (97.52%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 24.01% (97.88%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 23.60% (98.27%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 23.08% (97.80%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 22.45% (97.30%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 21.93% (97.69%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 21.52% (98.10%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 21.10% (98.07%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.89% (99.01%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.48% (98.01%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.17% (98.48%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 19.85% (98.45%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 19.13% (96.34%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 18.71% (97.83%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 18.40% (98.33%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.98% (97.74%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.67% (98.27%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.36% (98.24%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.84% (97.01%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.53% (98.15%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.11% (97.48%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.80% (98.06%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.49% (98.03%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.07% (97.32%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.66% (97.24%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.35% (97.87%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.93% (97.10%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.62% (97.76%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 12.06% (88.55%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 11.54% (95.69%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 11.12% (96.40%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.71% (96.26%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.50% (98.06%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.08% (96.04%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 9.67% (95.88%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 9.36% (96.77%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 8.84% (94.44%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 8.63% (97.65%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 8.32% (96.39%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.80% (93.75%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.48% (96.00%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.07% (94.44%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.65% (94.12%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.34% (95.31%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 5.93% (93.44%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 5.61% (94.74%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 5.30% (94.44%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 4.89% (92.16%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 4.37% (89.36%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 4.05% (92.86%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.74% (92.31%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.43% (91.67%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.01% (87.88%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.70% (89.66%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.18% (80.77%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.87% (85.71%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.56% (83.33%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.14% (73.33%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.83% (72.73%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+<ul style="display:none"><li class="color01" style="display:none"><img src="empty.png"> 0.42% (50.00%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=5">Object#recursion</a> [1 calls, 64 total]
+</li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img src="empty.png"> 0.42% (1.38%) Fixnum#* [1 calls, 2 total]
+</li></ul></li><li class="color01" style="display:none"><img src="empty.png"> 0.31% (0.99%) Fixnum#* [1 calls, 2 total]
+</li></ul></li><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 24.74% (27.64%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 24.32% (98.32%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 23.91% (98.29%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 23.49% (98.26%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 23.08% (98.23%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 22.66% (98.20%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 22.25% (98.17%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 22.04% (99.07%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 21.62% (98.11%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 21.21% (98.08%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.79% (98.04%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.37% (98.00%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.06% (98.47%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 19.75% (98.45%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 19.44% (98.42%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 19.02% (97.86%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 18.50% (97.27%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 18.19% (98.31%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.78% (97.71%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.46% (98.25%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.15% (98.21%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.74% (97.58%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.32% (97.52%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.01% (98.09%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.70% (98.05%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.28% (97.35%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.97% (97.96%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.66% (97.92%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.24% (97.16%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.72% (96.35%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.51% (98.48%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.10% (96.92%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 12.68% (96.83%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 12.37% (97.54%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 11.95% (96.64%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 11.54% (96.52%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 11.23% (97.30%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.81% (96.30%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.50% (97.12%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.19% (97.03%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 9.77% (95.92%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 9.36% (95.74%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 8.94% (95.56%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 8.73% (97.67%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 8.42% (96.43%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.90% (93.83%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.69% (97.37%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.28% (94.59%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.76% (92.86%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.55% (96.92%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.13% (93.65%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 5.82% (94.92%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 5.41% (92.86%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 5.20% (96.15%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 4.78% (92.00%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 4.26% (89.13%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 4.05% (95.12%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.74% (92.31%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.22% (86.11%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.01% (93.55%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.60% (86.21%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.08% (80.00%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.77% (85.00%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.94% (52.94%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+<ul style="display:none"><li class="color01" style="display:none"><img src="empty.png"> 0.31% (33.33%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=13">Object#tail_recursion</a> [1 calls, 65 total]
+</li><li class="color01" style="display:none"><img src="empty.png"> 0.10% (11.11%) Bignum#* [1 calls, 2 total]
+</li></ul></li><li class="color01" style="display:none"><img src="empty.png"> 0.21% (11.76%) Bignum#* [1 calls, 2 total]
+</li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 12.37% (13.82%) Kernel#gets [2 calls, 2 total]
+<ul><li class="color05" style="display:block"><img src="empty.png"> 9.46% (76.47%) ARGF.class#gets [2 calls, 2 total]
+</li></ul></li><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.03% (6.74%) <a href="txmt://open?url=file:///Users/philco/.rvm/rubies/ruby-1.9.3-p448/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb&line=34">Kernel#require</a> [1 calls, 1 total]
+<ul style="display:none"><li class="color01" style="display:block"><img src="empty.png"> 3.01% (50.00%) Kernel#gem_original_require [1 calls, 1 total]
+</li><li class="color01" style="display:none"><img src="empty.png"> 0.42% (6.90%) <a href="txmt://open?url=file:///Users/philco/.rvm/rubies/ruby-1.9.3-p448/lib/ruby/site_ruby/1.9.1/rubygems.rb&line=249">&lt;Module::Gem&gt;#unresolved_deps</a> [1 calls, 1 total]
+</li><li class="color01" style="display:none"><img src="empty.png"> 0.10% (1.72%) Hash#empty? [1 calls, 1 total]
+</li></ul></li><li class="color01" style="display:block"><img src="empty.png"> 5.93% (6.62%) String#to_i [2 calls, 2 total]
+</li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.95% (4.41%) Kernel#puts [1 calls, 1 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.53% (89.47%) IO#puts [1 calls, 1 total]
+<ul style="display:none"><li class="color01" style="display:block"><img src="empty.png"> 3.01% (85.29%) IO#write [2 calls, 2 total]
+</li></ul></li></ul></li><li class="color01" style="display:none"><img src="empty.png"> 0.31% (0.35%) Module#method_added [2 calls, 2 total]
+</li></ul></li><li class="color01" style="display:block"><img src="empty.png"> 3.01% (3.01%) <a href="txmt://open?url=file:///Users/philco/Documents/GA/curriculum/WDI_Curriculum/Week_11/2_/tail_recursion.rb&line=1">Global#[No method]</a> [1 calls, 2 total]
+</li></ul><div id="sentinel"></div></div></body></html>

@@ -1,4 +1,4 @@
-# RAILS OVERVIEW (in 60 mins or so)
+# RAILS OVERVIEW
 ok, we're gonna build a basic app and in the process
 I'll show you a high level overview of Rails and it's concepts.
 
@@ -22,7 +22,7 @@ Note: Make sure these are installed. git, ruby, rails, gem, and bundler. ( check
 ## start your cool blog
 
 ```
-rails _4.2.8_ new coolblog
+rails _4.0.4_ new coolblog --no-ri --no-rdoc
 
 cd coolblog
 
@@ -60,9 +60,9 @@ in the views folder there is a layouts folder and inside that you have **applica
 
 Now remember that **.erb** that extension stands for embedded ruby. Open this file and notice the **<%= yield %>** all of our views kinda feed into or goes through this yield
 
-lastly the next important file to notice is the file **config/routes.rb**
+Let's create our first controller...
 
-## first controller
+## First controller(10:00)
 $ rails g controller Posts
 
 (discuss what was generated)
@@ -77,13 +77,16 @@ end
 ```
 
 now create **views/post/index.html.erb**
+
 ```
-<h1>Index</h1>
+<h1>Index page</h1>
 ```
 
 so now where going to change our default landing page to a new route
 
 **config/routes.rb**
+
+NOTE: routes.rb is where all our page urls or our ROUTES will be set up
 
 uncomment "root 'welcome#index'"
 
@@ -96,7 +99,7 @@ root 'posts#index'
 ```
 Now look at the default page and see it has changed
 
-## Pages Controller
+## Pages Controller(14:35)
 
 $ rails g controller pages
 
@@ -117,11 +120,13 @@ get 'about' => 'pages#about'
 
 ```
 def about
-    @title = "About Us";
+    @title = "About Us"
+    @content = "Welcome to the about page"
 end
 ```
 
 **about.html.erb**
+
 ```
 <h1><%= @title %></h1>
 <h1><%= @content %></h1>
@@ -136,26 +141,15 @@ def index
     @posts = Post.all
 end
 
-def show
-
-end
-
 def new
 
 end
 
-def create
-
-end
-
-edit
-update
-destroy
-
-private def post_params
-    params.require(:post).permit(:title,:body)
-end
 ```
+
+the "def new" action will house our form that we'll use to create NEW post with.
+
+Ultimately we'll have a series of CRUD actions def CREATE def UPDATE def DESTROY and as well....
 
 we need all these routes. we can get them easily...
 
@@ -165,15 +159,69 @@ resource :posts (talk about resource routes in rake routes)
 
 rake routes (see all the routes)
 
-show.html.erb
+Now that we have the routes let's go back and build our form for our NEW action...
+
+## create views/posts/NEW.html.erb 
+
+```
+<h1>Add Post<h1>
+<%= form_for :post, url: post_path do |f| %>
+	<p>
+		<%= f.label :title %><br>
+		<%= f.text_field :title %>
+	</p>
+	<p>
+		<%= f.label :body %><br>
+		<%= f.text_area :body %>
+	</p>
+	<p>
+		<%= f.submit %>
+	<p>
+<% end %>
+```
+Now let's build the CREATE action
+
+```
+def index
+    @posts = Post.all
+end
+
+def new
+
+end
+
+def create
+	render text: params[:post].inspect 
+end
+
+```
+Now let's create a new post and see what happens
+
+afterwards we'll go back and comment out that line in our def create
+
+```
+...
+def create
+	#render plain: params[:post].inspect
+end
+
+```
+NOTE: what we saved is now saved inside the sql file based database
+
 ## (23:30) Create Model to save post
 rails g model Post title:string body:text
 
-post.rb
+This gives us a new file **models/post.rb** 
+The generator also builds a migration file for us.
 
-rake db:migrate
+peak inside this migration file and notice the **:title** and **:body**
 
-show post.title and post.body on 
+we'll use this file to talk to our database
+
+But first we need to run the migration...
+
+### rake db:migrate
+
 
 **index.html.erb**
 
@@ -184,42 +232,136 @@ show post.title and post.body on
     <p><%= post.body %></p>
 <% end %>
 ```
-## (30:00) get bootstrap cdn
+
+Now go back to 
+
+**post_controller.rb**
 
 ```
-add bootstrap cdn
+def create
+	@post = Post.new(post_params)
+	@post.save
+	redirect_to @post
+end
+
+private def post_params
+	params.require(:post).permit(:title, :body)
+end
+```
+
+try to save a new post now....error
+
+let's fix this error
+
+**post_controller.rb**
+
+```
+def show
+	@post = Post.find(params[:id])
+end
+```
+
+**show.html.erb**
+
+```
+<h2><%= @post.title %></h2>
+<p><%= @post.body %></p>
+```
+
+now to list all our post
+
+**posts_controller**
+
+```
+def index
+	@post = Post.all
+end
+```
+
+**index.html.erb**
+
+```
+<h1>Blog Posts</h1>
+<% @post.each do |post| %>
+	<h3><%= post.title %></h3>
+	<p><%= post.body %></p>
+<% end %>
+```
+
+## get bootstrap cdn
+
+```
 https://www.bootstrapcdn.com
-https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+
+https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css
 ```
 now open
 
-**views/layouts/application.html**
+**views/layouts/application.html.erb**
+
 ```
 add this line under the title tags
-<%= stylsheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootsctrap.min.css' %>
+<%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' %>
+...
+
 ```
 save and reload the app
 
 now visit...
 
-getbootstrap.com/getting-started/#examples
+[https://getbootstrap.com/docs/4.0/examples/starter-template/](https://getbootstrap.com/docs/4.0/examples/starter-template/)
 
 ```
-1. find the starter template
-2. grab the navbar code
-3. paste it inside your <body> tags
+1. grab the navbar code
+2. paste it inside your <body> tags
 ```
 
-# change navbar
 ```
-- remove "navbar-fixed-top"
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-- navbar-inverse becomes navbar-default
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    
+    ...
+```
 
+# Change navbar
+
+```
 - "project name" becomes "CoolBlog"
 ```
 
 change link tags to link_to helper
+
 ```
 <ul class="nav navbar-nav">
     <li><%= link_to "Home", home_path %></li>
@@ -227,11 +369,13 @@ change link tags to link_to helper
 <ul class="nav navbar-nav navbar-right">
     <li><%= link_to "Create Post", new_post_path %></li>
 </ul>
+
 ```
 
 note: now path won't work so we need to edit routes...
 
 **routes.rb**
+
 ```
 root 'post#index', as: 'home'
 
@@ -241,7 +385,8 @@ get 'about' => 'pages#about', as: 'about'
 Minor adjustment can be added to the visual look,
 wrap the yield in a container div.
 
-**application.htnl.erb**
+**application.html.erb**
+
 ```
 <div class="container">
     <%= yield %>
@@ -251,6 +396,7 @@ wrap the yield in a container div.
 next add a bootstrap class to the form on new.html.erb
 
 **views/posts/new.html.erb**
+
 ```
 <%= f.label :title %><br>
 <%= f.text_field(:title, {:class => 'form-control'}) %>
@@ -260,15 +406,17 @@ next add a bootstrap class to the form on new.html.erb
 <%= f.submit({:class => 'btn btn-primary'}) %>
 ```
 
-## validation
+## Validation
 
 **models/post.rb**
+
 ```
 validates :title, presence: true,
 						length: {minimum: 5}
 ```
 
 **posts_controller**
+
 ```
 def create
     @post = Post.new(post_params)
@@ -282,6 +430,7 @@ end
 ```
 
 **views/posts/new.html.erb**
+
 ```
 right at the top under "form_for"...
 <% if @post.erros.any? %>
@@ -299,6 +448,7 @@ Notice how rails will help us when things break?
 Now let's fix it.
 
 **posts_controller.rb**
+
 ```
 ...
 
@@ -311,6 +461,7 @@ end
 Now add a post and watch the validation work...
 
 **index.html.erb**
+
 ```
 <% @posts.each do |post| %>
 <div class="well">
@@ -327,6 +478,7 @@ navigate to the show page...goto "localhost:3000/posts/1
 Let's make an edit link
 
 **show.html.erb**
+
 ```
 <p><%= @post.body %></p>
 ...
@@ -336,7 +488,9 @@ Let's make an edit link
 Try the "edit" button in your browser...it will fail.
 
 Let's fix that.
+
 **posts_controller.erb**
+
 ```
 def create
  ...
@@ -350,6 +504,7 @@ end
 create new file...
 
 **views/posts/edit.html.erb**
+
 ```
 1. copy new.html.erb into this file..then edit the contents as so.
 
@@ -366,6 +521,7 @@ You should get an error
 Let's add our update action
 
 **posts_controller.rb**
+
 ```
 def edit
     ...
@@ -387,6 +543,7 @@ Now try to edit a post same as before....success!
 
 # Delete Post
 **posts_controller.rb**
+
 ```
 def update
 ...
@@ -403,6 +560,7 @@ end
 let's add a link for the delete action
 
 **show.html.erb**
+
 ```
 ...
 <%= link_to "Delete", post_path(@post),
@@ -422,6 +580,7 @@ $ rake db:migrate
 
 now open up the model file.
 **models/comment**
+
 ```
 note the "belongs_to :post
 ```
@@ -431,6 +590,7 @@ this defines a relationship....a comment "belongs to" a post
 Now open up your post model
 
 **models/posts**
+
 ```
 has_many :comments
 ...
@@ -439,6 +599,7 @@ has_many :comments
 Now add routes
 
 **routes**
+
 ```
 ...
 resources :posts do
@@ -480,6 +641,7 @@ $ rails g controller Comments
 ```
 
 **comments_controller.rb**
+
 ```
 def create
     @post = Post.find(params[:post_id])
@@ -517,6 +679,7 @@ In your browser...localhost:3000/post/1
 we'll start by breaking up show.html.erb into different views using rails partials
 
 **views/comments/_comments.html.erb**
+
 ```
 (from post/show.html.erb cut and paste this block of code)
  <h3>Comments</h3>
@@ -528,6 +691,7 @@ we'll start by breaking up show.html.erb into different views using rails partia
 ```
 
 **views/comments/_form.html.erb**
+
 ```
 (cut and past from show.html.erb)
 
@@ -548,6 +712,7 @@ we'll start by breaking up show.html.erb into different views using rails partia
 ```
 
 **show.html.erb**
+
 ```
 ...
 <hr>
@@ -557,6 +722,7 @@ we'll start by breaking up show.html.erb into different views using rails partia
 ```
 
 **views/comments/_comments.html.erb**
+
 ```
 (from post/show.html.erb cut and paste this block of code...
 and add the link_to '[X]')
@@ -579,6 +745,7 @@ in the browser, test the 'X'...it should give an error.
 let's fix that...
 
 **comments_controller.rb**
+
 ```
 ...
 def destroy
@@ -596,6 +763,7 @@ Let's make it so the general public can't just delete whatever they like on your
 # BASIC Authentication
 
 **post_controller.rb**
+
 ```
 class PostController < ApplicationController
     http_basic_authenticate_with name: "unclefonso", password:"1234", except:[:index, :show]
@@ -603,6 +771,7 @@ class PostController < ApplicationController
 ```
 
 **comments_controller.rb**
+
 ```
 class CommentsController < ApplicationController
     http_basic_authenticate_with name: "unclefonso", password:"1234", only:[:destroy]
@@ -628,6 +797,9 @@ Basic Auth done.
 This ends the high level basic Rails overview
 
 Congrats on working through all of it!
+
+
+http://guides.rubyonrails.org/v4.0/getting_started.html
 
 
 ---
