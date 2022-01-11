@@ -5,7 +5,7 @@ WHAT WILL YOU LEARN? <br>
 
 I'll take you on a journey that starts you with basic HTML all the way to full blown advanced Rails application development and deployment.
 
-Along the way, you will learn about javascript development so you can give your creations pizazz. We will seperate your content from it's presentation layer with databasses. You'll also learn App deployment so your app can be shared with the world. Along the way we will also talk about network based technologies like Node, and project management tools for modern team-based web application development. 
+Along the way, you will learn about javascript development so you can give your creations style. We will seperate your content from it's presentation layer with databasses. You will also learn App deployment so your app can be shared with the world. Along the way we will talk about network based technologies like Node, and project management tools for modern team-based web application development. 
 
 The core portion of this course is 14 weeks long. This estimate is based on a 5hr per day time frame.
 
